@@ -1,0 +1,47 @@
+---
+# Run once after postgres is ready to initialise the schema.
+# kubectl apply -f k8s/base/12-db-init-job.yaml
+# kubectl logs job/busconnect-db-init -n busconnect
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: busconnect-db-init
+  namespace: busconnect
+  labels:
+    app: db-init
+spec:
+  backoffLimit: 5
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-postgres
+          image: busybox:1.35
+          command: ['sh','-c','until nc -z postgres-service 5432; do echo "waiting..."; sleep 3; done; echo "postgres ready"']
+      containers:
+        - name: db-init
+          image: postgres:15-alpine
+          env:
+            - name: PGHOST
+              valueFrom: { configMapKeyRef: { name: busconnect-config, key: DB_HOST } }
+            - name: PGDATABASE
+              valueFrom: { configMapKeyRef: { name: busconnect-config, key: DB_NAME } }
+            - name: PGUSER
+              valueFrom: { configMapKeyRef: { name: busconnect-config, key: DB_USER } }
+            - name: PGPASSWORD
+              valueFrom: { secretKeyRef: { name: busconnect-secret, key: DB_PASSWORD } }
+          command:
+            - sh
+            - -c
+            - |
+              echo "==> Running schema.sql..."
+              psql -f /sql/schema.sql
+              echo "==> Schema applied successfully"
+          volumeMounts:
+            - name: schema
+              mountPath: /sql
+      volumes:
+        - name: schema
+          configMap:
+            name: busconnect-schema

@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: busconnect-sa
+  namespace: busconnect
+  labels:
+    app.kubernetes.io/name: busconnect
+
+---
+# Role: read-only config access (services don't need cluster-wide perms)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: busconnect-role
+  namespace: busconnect
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps", "secrets"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: busconnect-role-binding
+  namespace: busconnect
+subjects:
+  - kind: ServiceAccount
+    name: busconnect-sa
+    namespace: busconnect
+roleRef:
+  kind: Role
+  name: busconnect-role
+  apiGroup: rbac.authorization.k8s.io

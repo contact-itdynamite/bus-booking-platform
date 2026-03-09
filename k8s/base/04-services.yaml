@@ -1,0 +1,378 @@
+# ─── Reusable init container snippet (inline for each service) ─────────────────
+# Each service waits for postgres before starting.
+
+---
+# ══════════════════════════════════════════
+# AUTH SERVICE  :3001
+# ══════════════════════════════════════════
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  namespace: busconnect
+  labels: { app: auth-service }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: auth-service }
+  template:
+    metadata:
+      labels: { app: auth-service }
+    spec:
+      initContainers:
+        - name: wait-postgres
+          image: busybox:1.35
+          command: ['sh','-c','until nc -z postgres-service 5432; do sleep 2; done']
+      containers:
+        - name: auth-service
+          image: busconnect/auth-service:latest
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 3001 }]
+          envFrom:
+            - configMapRef:  { name: busconnect-config }
+            - secretRef:     { name: busconnect-secret }
+          env:
+            - { name: PORT, value: "3001" }
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits:   { cpu: 300m, memory: 256Mi }
+          readinessProbe: { httpGet: { path: /health, port: 3001 }, initialDelaySeconds: 15, periodSeconds: 10 }
+          livenessProbe:  { httpGet: { path: /health, port: 3001 }, initialDelaySeconds: 30, periodSeconds: 30 }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: busconnect
+spec:
+  selector: { app: auth-service }
+  ports: [{ port: 3001, targetPort: 3001 }]
+
+---
+# ══════════════════════════════════════════
+# USER SERVICE  :3002
+# ══════════════════════════════════════════
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: busconnect
+  labels: { app: user-service }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: user-service }
+  template:
+    metadata:
+      labels: { app: user-service }
+    spec:
+      initContainers:
+        - name: wait-postgres
+          image: busybox:1.35
+          command: ['sh','-c','until nc -z postgres-service 5432; do sleep 2; done']
+      containers:
+        - name: user-service
+          image: busconnect/user-service:latest
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 3002 }]
+          envFrom:
+            - configMapRef: { name: busconnect-config }
+            - secretRef:    { name: busconnect-secret }
+          env:
+            - { name: PORT, value: "3002" }
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits:   { cpu: 300m, memory: 256Mi }
+          readinessProbe: { httpGet: { path: /health, port: 3002 }, initialDelaySeconds: 15, periodSeconds: 10 }
+          livenessProbe:  { httpGet: { path: /health, port: 3002 }, initialDelaySeconds: 30, periodSeconds: 30 }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: busconnect
+spec:
+  selector: { app: user-service }
+  ports: [{ port: 3002, targetPort: 3002 }]
+
+---
+# ══════════════════════════════════════════
+# OPERATOR SERVICE  :3003
+# ══════════════════════════════════════════
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: operator-service
+  namespace: busconnect
+  labels: { app: operator-service }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: operator-service }
+  template:
+    metadata:
+      labels: { app: operator-service }
+    spec:
+      initContainers:
+        - name: wait-postgres
+          image: busybox:1.35
+          command: ['sh','-c','until nc -z postgres-service 5432; do sleep 2; done']
+      containers:
+        - name: operator-service
+          image: busconnect/operator-service:latest
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 3003 }]
+          envFrom:
+            - configMapRef: { name: busconnect-config }
+            - secretRef:    { name: busconnect-secret }
+          env:
+            - { name: PORT, value: "3003" }
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits:   { cpu: 300m, memory: 256Mi }
+          readinessProbe: { httpGet: { path: /health, port: 3003 }, initialDelaySeconds: 15, periodSeconds: 10 }
+          livenessProbe:  { httpGet: { path: /health, port: 3003 }, initialDelaySeconds: 30, periodSeconds: 30 }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: operator-service
+  namespace: busconnect
+spec:
+  selector: { app: operator-service }
+  ports: [{ port: 3003, targetPort: 3003 }]
+
+---
+# ══════════════════════════════════════════
+# BOOKING SERVICE  :3004  (higher replicas — critical path)
+# ══════════════════════════════════════════
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booking-service
+  namespace: busconnect
+  labels: { app: booking-service }
+spec:
+  replicas: 3
+  selector:
+    matchLabels: { app: booking-service }
+  template:
+    metadata:
+      labels: { app: booking-service }
+    spec:
+      initContainers:
+        - name: wait-postgres
+          image: busybox:1.35
+          command: ['sh','-c','until nc -z postgres-service 5432; do sleep 2; done']
+      containers:
+        - name: booking-service
+          image: busconnect/booking-service:latest
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 3004 }]
+          envFrom:
+            - configMapRef: { name: busconnect-config }
+            - secretRef:    { name: busconnect-secret }
+          env:
+            - { name: PORT, value: "3004" }
+          resources:
+            requests: { cpu: 200m, memory: 256Mi }
+            limits:   { cpu: 500m, memory: 512Mi }
+          readinessProbe: { httpGet: { path: /health, port: 3004 }, initialDelaySeconds: 15, periodSeconds: 10 }
+          livenessProbe:  { httpGet: { path: /health, port: 3004 }, initialDelaySeconds: 30, periodSeconds: 30 }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking-service
+  namespace: busconnect
+spec:
+  selector: { app: booking-service }
+  ports: [{ port: 3004, targetPort: 3004 }]
+
+---
+# ══════════════════════════════════════════
+# WALLET SERVICE  :3005
+# ══════════════════════════════════════════
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wallet-service
+  namespace: busconnect
+  labels: { app: wallet-service }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: wallet-service }
+  template:
+    metadata:
+      labels: { app: wallet-service }
+    spec:
+      initContainers:
+        - name: wait-postgres
+          image: busybox:1.35
+          command: ['sh','-c','until nc -z postgres-service 5432; do sleep 2; done']
+      containers:
+        - name: wallet-service
+          image: busconnect/wallet-service:latest
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 3005 }]
+          envFrom:
+            - configMapRef: { name: busconnect-config }
+            - secretRef:    { name: busconnect-secret }
+          env:
+            - { name: PORT, value: "3005" }
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits:   { cpu: 300m, memory: 256Mi }
+          readinessProbe: { httpGet: { path: /health, port: 3005 }, initialDelaySeconds: 15, periodSeconds: 10 }
+          livenessProbe:  { httpGet: { path: /health, port: 3005 }, initialDelaySeconds: 30, periodSeconds: 30 }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wallet-service
+  namespace: busconnect
+spec:
+  selector: { app: wallet-service }
+  ports: [{ port: 3005, targetPort: 3005 }]
+
+---
+# ══════════════════════════════════════════
+# PROMO SERVICE  :3006
+# ══════════════════════════════════════════
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: promo-service
+  namespace: busconnect
+  labels: { app: promo-service }
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: promo-service }
+  template:
+    metadata:
+      labels: { app: promo-service }
+    spec:
+      initContainers:
+        - name: wait-postgres
+          image: busybox:1.35
+          command: ['sh','-c','until nc -z postgres-service 5432; do sleep 2; done']
+      containers:
+        - name: promo-service
+          image: busconnect/promo-service:latest
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 3006 }]
+          envFrom:
+            - configMapRef: { name: busconnect-config }
+            - secretRef:    { name: busconnect-secret }
+          env:
+            - { name: PORT, value: "3006" }
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits:   { cpu: 200m, memory: 256Mi }
+          readinessProbe: { httpGet: { path: /health, port: 3006 }, initialDelaySeconds: 15, periodSeconds: 10 }
+          livenessProbe:  { httpGet: { path: /health, port: 3006 }, initialDelaySeconds: 30, periodSeconds: 30 }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: promo-service
+  namespace: busconnect
+spec:
+  selector: { app: promo-service }
+  ports: [{ port: 3006, targetPort: 3006 }]
+
+---
+# ══════════════════════════════════════════
+# ADMIN SERVICE  :3007
+# ══════════════════════════════════════════
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-service
+  namespace: busconnect
+  labels: { app: admin-service }
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: admin-service }
+  template:
+    metadata:
+      labels: { app: admin-service }
+    spec:
+      initContainers:
+        - name: wait-postgres
+          image: busybox:1.35
+          command: ['sh','-c','until nc -z postgres-service 5432; do sleep 2; done']
+      containers:
+        - name: admin-service
+          image: busconnect/admin-service:latest
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 3007 }]
+          envFrom:
+            - configMapRef: { name: busconnect-config }
+            - secretRef:    { name: busconnect-secret }
+          env:
+            - { name: PORT, value: "3007" }
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits:   { cpu: 300m, memory: 256Mi }
+          readinessProbe: { httpGet: { path: /health, port: 3007 }, initialDelaySeconds: 15, periodSeconds: 10 }
+          livenessProbe:  { httpGet: { path: /health, port: 3007 }, initialDelaySeconds: 30, periodSeconds: 30 }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-service
+  namespace: busconnect
+spec:
+  selector: { app: admin-service }
+  ports: [{ port: 3007, targetPort: 3007 }]
+
+---
+# ══════════════════════════════════════════
+# NOTIFICATION SERVICE  :3008
+# ══════════════════════════════════════════
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  namespace: busconnect
+  labels: { app: notification-service }
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: notification-service }
+  template:
+    metadata:
+      labels: { app: notification-service }
+    spec:
+      initContainers:
+        - name: wait-postgres
+          image: busybox:1.35
+          command: ['sh','-c','until nc -z postgres-service 5432; do sleep 2; done']
+      containers:
+        - name: notification-service
+          image: busconnect/notification-service:latest
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 3008 }]
+          envFrom:
+            - configMapRef: { name: busconnect-config }
+            - secretRef:    { name: busconnect-secret }
+          env:
+            - { name: PORT, value: "3008" }
+          resources:
+            requests: { cpu: 50m,  memory: 64Mi }
+            limits:   { cpu: 200m, memory: 128Mi }
+          readinessProbe: { httpGet: { path: /health, port: 3008 }, initialDelaySeconds: 10, periodSeconds: 10 }
+          livenessProbe:  { httpGet: { path: /health, port: 3008 }, initialDelaySeconds: 20, periodSeconds: 30 }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  namespace: busconnect
+spec:
+  selector: { app: notification-service }
+  ports: [{ port: 3008, targetPort: 3008 }]

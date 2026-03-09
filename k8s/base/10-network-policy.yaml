@@ -1,0 +1,100 @@
+---
+# Default deny all ingress/egress within namespace
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: busconnect
+spec:
+  podSelector: {}
+  policyTypes: [Ingress, Egress]
+
+---
+# Allow api-gateway to receive traffic from ingress controller
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-to-gateway
+  namespace: busconnect
+spec:
+  podSelector:
+    matchLabels: { app: api-gateway }
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
+    - ports: [{ port: 8080, protocol: TCP }]
+
+---
+# Allow api-gateway to call all services
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-gateway-to-services
+  namespace: busconnect
+spec:
+  podSelector:
+    matchLabels: { app: api-gateway }
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - podSelector: {}
+    - to:          # Allow DNS
+        - namespaceSelector: {}
+      ports: [{ port: 53, protocol: UDP }, { port: 53, protocol: TCP }]
+
+---
+# Allow all services to receive from api-gateway
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-services-from-gateway
+  namespace: busconnect
+spec:
+  podSelector: {}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector: { matchLabels: { app: api-gateway } }
+    - from:
+        - podSelector: {}    # Allow inter-service calls
+
+---
+# Allow all services to call postgres
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-services-to-postgres
+  namespace: busconnect
+spec:
+  podSelector:
+    matchLabels: { app: postgres }
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector: {}
+      ports: [{ port: 5432, protocol: TCP }]
+
+---
+# Allow all services egress to postgres + other services + internet (for email)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-services-egress
+  namespace: busconnect
+spec:
+  podSelector: {}
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - podSelector: {}           # Within namespace
+    - ports:                        # DNS
+        - { port: 53, protocol: UDP }
+        - { port: 53, protocol: TCP }
+    - ports:                        # SMTP (Gmail)
+        - { port: 587, protocol: TCP }
+        - { port: 465, protocol: TCP }
+    - ports:                        # HTTPS (external calls)
+        - { port: 443, protocol: TCP }

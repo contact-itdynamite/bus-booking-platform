@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: busconnect-config
+  namespace: busconnect
+data:
+  NODE_ENV:                  "production"
+  DB_HOST:                   "postgres-service"
+  DB_PORT:                   "5432"
+  DB_NAME:                   "busplatform"
+  DB_USER:                   "busadmin"
+  AUTH_SERVICE_URL:          "http://auth-service:3001"
+  USER_SERVICE_URL:          "http://user-service:3002"
+  OPERATOR_SERVICE_URL:      "http://operator-service:3003"
+  BOOKING_SERVICE_URL:       "http://booking-service:3004"
+  WALLET_SERVICE_URL:        "http://wallet-service:3005"
+  PROMO_SERVICE_URL:         "http://promo-service:3006"
+  ADMIN_SERVICE_URL:         "http://admin-service:3007"
+  NOTIFICATION_SERVICE_URL:  "http://notification-service:3008"
+  COMMISSION_RATE:           "0.10"
+  SIGNUP_BONUS:              "1000"
+  JWT_EXPIRES_IN:            "7d"
+  SMTP_HOST:                 "smtp.gmail.com"
+  SMTP_PORT:                 "587"
