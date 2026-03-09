@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Routes – Operator Portal</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-logo">🚌 Bus<span>Connect</span></div>
+  <nav class="sidebar-nav">
+    <a href="dashboard.html"><span class="icon">📊</span><span>Dashboard</span></a>
+    <a href="buses.html"><span class="icon">🚌</span><span>My Buses</span></a>
+    <a href="routes.html" class="active"><span class="icon">🗺️</span><span>Routes</span></a>
+    <a href="schedules.html"><span class="icon">📅</span><span>Schedules</span></a>
+    <a href="bookings.html"><span class="icon">🎫</span><span>Bookings</span></a>
+    <a href="wallet.html"><span class="icon">💰</span><span>Wallet</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user" id="sidebarUser"><strong>Operator</strong></div>
+    <button class="btn btn-ghost btn-sm" onclick="logout()" style="width:100%;">Logout</button>
+  </div>
+</aside>
+<main class="main-content">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+    <div><h1 class="page-title">Routes</h1><p class="page-subtitle">Manage your bus routes</p></div>
+    <button class="btn btn-accent" onclick="document.getElementById('routeModal').classList.add('active')">+ Add Route</button>
+  </div>
+  <div class="card" id="routesCard"><div style="text-align:center;padding:40px;">Loading...</div></div>
+</main>
+
+<div class="modal-overlay" id="routeModal">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('routeModal').classList.remove('active')">×</button>
+    <h2 class="modal-title">Add Route</h2>
+    <div id="routeAlert" class="alert alert-error" style="display:none;"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Source City *</label><input type="text" id="src" placeholder="Mumbai" list="cl"><datalist id="cl"><option value="Mumbai"><option value="Delhi"><option value="Bangalore"><option value="Hyderabad"><option value="Chennai"><option value="Pune"><option value="Jaipur"></datalist></div>
+      <div class="form-group"><label>Destination City *</label><input type="text" id="dst" placeholder="Pune" list="cl2"><datalist id="cl2"><option value="Mumbai"><option value="Delhi"><option value="Bangalore"><option value="Hyderabad"><option value="Chennai"><option value="Pune"><option value="Jaipur"></datalist></div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>Distance (km)</label><input type="number" id="dist" placeholder="150"></div>
+      <div class="form-group"><label>Duration (mins)</label><input type="number" id="dur" placeholder="180"></div>
+    </div>
+    <button class="btn btn-accent btn-block" onclick="saveRoute()">Add Route</button>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+async function loadRoutes() {
+  if (!requireAuth()) return;
+  try {
+    const routes = await apiCall('/operators/routes');
+    const card = document.getElementById('routesCard');
+    if (!routes.length) { card.innerHTML = '<div style="text-align:center;padding:60px;color:#64748b;"><div style="font-size:48px;">🗺️</div><h3 style="font-family:Syne,sans-serif;margin-top:12px;">No routes yet</h3></div>'; return; }
+    card.innerHTML = `<table class="data-table"><thead><tr><th>Source</th><th>Destination</th><th>Distance</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+      ${routes.map(r => `<tr>
+        <td><strong>${r.source_city}</strong></td>
+        <td><strong>${r.destination_city}</strong></td>
+        <td>${r.distance_km ? r.distance_km + ' km' : '—'}</td>
+        <td>${r.duration_minutes ? Math.floor(r.duration_minutes/60) + 'h ' + (r.duration_minutes%60) + 'm' : '—'}</td>
+        <td><span class="badge ${r.is_active?'badge-green':'badge-red'}">${r.is_active?'Active':'Inactive'}</span></td>
+        <td><button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;" onclick="toggleRoute('${r.id}',${r.is_active})">${r.is_active?'Deactivate':'Activate'}</button></td>
+      </tr>`).join('')}
+    </tbody></table>`;
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+}
+
+async function saveRoute() {
+  const src = document.getElementById('src').value.trim();
+  const dst = document.getElementById('dst').value.trim();
+  const dist = document.getElementById('dist').value;
+  const dur = document.getElementById('dur').value;
+  const alertEl = document.getElementById('routeAlert');
+  if (!src||!dst) { alertEl.textContent='Source and destination required'; alertEl.style.display=''; return; }
+  alertEl.style.display='none';
+  try {
+    await apiCall('/operators/routes', { method:'POST', body:{ source_city:src, destination_city:dst, distance_km:dist||null, duration_minutes:dur||null } });
+    showToast('Route added!','success');
+    document.getElementById('routeModal').classList.remove('active');
+    loadRoutes();
+  } catch(e) { alertEl.textContent=e.message; alertEl.style.display=''; }
+}
+
+async function toggleRoute(id, active) {
+  try { await apiCall(`/operators/routes/${id}`, { method:'PUT', body:{ is_active:!active, source_city:'', destination_city:'' } }); loadRoutes(); }
+  catch(e) { showToast(e.message,'error'); }
+}
+
+loadRoutes();
+</script>
+</body>
+</html>

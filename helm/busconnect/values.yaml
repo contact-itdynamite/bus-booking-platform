@@ -1,0 +1,158 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# BusConnect Helm Chart – values.yaml
+# Override via: helm upgrade --install busconnect ./helm/busconnect -f my-values.yaml
+# Or inline:   helm install busconnect ./helm/busconnect --set secrets.smtpPass=APP_PASSWORD
+# ─────────────────────────────────────────────────────────────────────────────
+
+global:
+  namespace: busconnect
+  imageRegistry: ""          # e.g. "docker.io/yourorg/" — leave empty for local images
+  imagePullPolicy: IfNotPresent
+  imageTag: latest
+
+# ── Secrets (set via --set on deploy, do NOT commit real values) ──────────────
+secrets:
+  jwtSecret: "super_secret_jwt_key_bus_platform_2024_change_me"
+  dbPassword: "buspassword123"
+  smtpUser: "contact.busconnect@gmail.com"       # sender email
+  smtpPass: "REPLACE_WITH_APP_PASSWORD"  # Gmail App Password – set via helm --set
+
+# ── PostgreSQL ─────────────────────────────────────────────────────────────────
+postgres:
+  enabled: true
+  image: postgres:15-alpine
+  database: busplatform
+  user: busadmin
+  storage: 10Gi
+  storageClass: ""        # leave empty for default StorageClass
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+
+# ── API Gateway ────────────────────────────────────────────────────────────────
+apiGateway:
+  enabled: true
+  replicaCount: 2
+  image: busconnect/api-gateway
+  port: 8080
+  service:
+    type: ClusterIP
+    port: 8080
+  ingress:
+    enabled: true
+    className: nginx
+    host: busconnect.local        # change to your domain
+    tlsSecret: ""                 # set to TLS secret name to enable HTTPS
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+  rateLimitMax: 500
+  rateLimitWindowMs: 900000
+
+# ── Microservices ──────────────────────────────────────────────────────────────
+services:
+  auth:
+    enabled: true
+    replicaCount: 2
+    image: busconnect/auth-service
+    port: 3001
+    resources:
+      requests: { cpu: 100m, memory: 128Mi }
+      limits:   { cpu: 300m, memory: 256Mi }
+
+  user:
+    enabled: true
+    replicaCount: 2
+    image: busconnect/user-service
+    port: 3002
+    resources:
+      requests: { cpu: 100m, memory: 128Mi }
+      limits:   { cpu: 300m, memory: 256Mi }
+
+  operator:
+    enabled: true
+    replicaCount: 2
+    image: busconnect/operator-service
+    port: 3003
+    resources:
+      requests: { cpu: 100m, memory: 128Mi }
+      limits:   { cpu: 300m, memory: 256Mi }
+
+  booking:
+    enabled: true
+    replicaCount: 3          # higher replicas for booking-service (critical path)
+    image: busconnect/booking-service
+    port: 3004
+    resources:
+      requests: { cpu: 200m, memory: 256Mi }
+      limits:   { cpu: 500m, memory: 512Mi }
+
+  wallet:
+    enabled: true
+    replicaCount: 2
+    image: busconnect/wallet-service
+    port: 3005
+    commissionRate: "0.10"
+    signupBonus: "1000"
+    resources:
+      requests: { cpu: 100m, memory: 128Mi }
+      limits:   { cpu: 300m, memory: 256Mi }
+
+  promo:
+    enabled: true
+    replicaCount: 1
+    image: busconnect/promo-service
+    port: 3006
+    resources:
+      requests: { cpu: 100m, memory: 128Mi }
+      limits:   { cpu: 200m, memory: 256Mi }
+
+  admin:
+    enabled: true
+    replicaCount: 1
+    image: busconnect/admin-service
+    port: 3007
+    resources:
+      requests: { cpu: 100m, memory: 128Mi }
+      limits:   { cpu: 300m, memory: 256Mi }
+
+  notification:
+    enabled: true
+    replicaCount: 1
+    image: busconnect/notification-service
+    port: 3008
+    smtpHost: "smtp.gmail.com"
+    smtpPort: "587"
+    resources:
+      requests: { cpu: 50m, memory: 64Mi }
+      limits:   { cpu: 200m, memory: 128Mi }
+
+# ── Frontend (served via nginx) ────────────────────────────────────────────────
+frontend:
+  enabled: true
+  replicaCount: 2
+  image: busconnect/frontend
+  port: 80
+  resources:
+    requests: { cpu: 50m, memory: 64Mi }
+    limits:   { cpu: 200m, memory: 128Mi }
+
+# ── Horizontal Pod Autoscaler ──────────────────────────────────────────────────
+hpa:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  cpuTargetUtilization: 70
+
+# ── Pod Disruption Budget ──────────────────────────────────────────────────────
+pdb:
+  enabled: false
+  minAvailable: 1

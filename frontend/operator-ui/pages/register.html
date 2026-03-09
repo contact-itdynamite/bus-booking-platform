@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operator Register – BusConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:#f0f4f8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 24px;}
+    .card{background:white;border-radius:20px;padding:48px;width:100%;max-width:560px;box-shadow:0 12px 48px rgba(0,0,0,0.12);}
+    .logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#0F172A;text-align:center;margin-bottom:4px;}
+    h1{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;text-align:center;margin-bottom:6px;}
+    p{color:#64748b;text-align:center;margin-bottom:24px;font-size:14px;}
+    label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#64748b;margin-bottom:5px;}
+    input{width:100%;padding:11px 14px;border:2px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:14px;outline:none;transition:border-color 0.2s;}
+    input:focus{border-color:#1A56DB;}
+    .fg{margin-bottom:14px;}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .btn{width:100%;padding:13px;background:#0F172A;color:white;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px;}
+    .btn:hover{background:#1A56DB;}
+    .btn:disabled{opacity:0.5;cursor:not-allowed;}
+    .alert{border-radius:8px;padding:12px 14px;font-size:14px;margin-bottom:14px;}
+    .alert-error{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;}
+    .alert-success{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;}
+    .links{text-align:center;margin-top:16px;font-size:14px;color:#64748b;}
+    .links a{color:#1A56DB;font-weight:600;}
+    .otp-row{display:flex;gap:8px;justify-content:center;margin:16px 0;}
+    .otp-d{width:48px;height:56px;text-align:center;border:2px solid #e2e8f0;border-radius:8px;font-size:24px;font-weight:700;outline:none;}
+    .otp-d:focus{border-color:#1A56DB;}
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">🚌 BusConnect</div>
+  <h1>Register as Operator</h1>
+  <p>Join BusConnect and reach millions of travelers</p>
+  <div id="errAlert" class="alert alert-error" style="display:none;"></div>
+
+  <div id="regForm">
+    <div class="grid">
+      <div class="fg"><label>Your Name *</label><input type="text" id="name" placeholder="Full name"></div>
+      <div class="fg"><label>Company Name *</label><input type="text" id="company" placeholder="Bus Co. Pvt Ltd"></div>
+    </div>
+    <div class="grid">
+      <div class="fg"><label>Email *</label><input type="email" id="email" placeholder="you@company.com"></div>
+      <div class="fg"><label>Phone</label><input type="tel" id="phone" placeholder="+91 98765 43210"></div>
+    </div>
+    <div class="grid">
+      <div class="fg"><label>GST Number</label><input type="text" id="gst" placeholder="22XXXXX1234X1ZX"></div>
+      <div class="fg"><label>License Number</label><input type="text" id="license" placeholder="KA/XXXXXX/XXXX"></div>
+    </div>
+    <div class="fg"><label>Password *</label><input type="password" id="password" placeholder="Min 6 characters"></div>
+    <button class="btn" id="regBtn" onclick="doRegister()">Create Operator Account</button>
+    <div class="links"><p style="margin-top:12px;">Already registered? <a href="login.html">Sign in</a></p></div>
+  </div>
+
+  <div id="otpForm" style="display:none;">
+    <h2 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;text-align:center;margin-bottom:6px;">Verify Email</h2>
+    <p>Code sent to <strong id="otpEmail"></strong></p>
+    <div class="otp-row">
+      <input class="otp-d" maxlength="1" type="text" inputmode="numeric" id="d1" oninput="nxt(this,'d2')">
+      <input class="otp-d" maxlength="1" type="text" inputmode="numeric" id="d2" oninput="nxt(this,'d3')">
+      <input class="otp-d" maxlength="1" type="text" inputmode="numeric" id="d3" oninput="nxt(this,'d4')">
+      <input class="otp-d" maxlength="1" type="text" inputmode="numeric" id="d4" oninput="nxt(this,'d5')">
+      <input class="otp-d" maxlength="1" type="text" inputmode="numeric" id="d5" oninput="nxt(this,'d6')">
+      <input class="otp-d" maxlength="1" type="text" inputmode="numeric" id="d6" oninput="nxt(this,null)">
+    </div>
+    <button class="btn" id="otpBtn" onclick="verifyOTP()">Verify Email</button>
+    <div class="links"><p style="margin-top:12px;"><a href="#" onclick="resend()">Resend OTP</a></p></div>
+  </div>
+
+  <div id="doneMsg" style="display:none;text-align:center;padding:20px 0;">
+    <div style="font-size:48px;margin-bottom:12px;">✅</div>
+    <h2 style="font-family:'Syne',sans-serif;">Account Created!</h2>
+    <p style="margin-top:8px;">Your account is pending admin approval. You'll be notified by email once approved.</p>
+    <a href="login.html" style="display:inline-block;margin-top:16px;padding:12px 24px;background:#0F172A;color:white;border-radius:8px;font-weight:700;">Go to Login</a>
+  </div>
+</div>
+
+<script src="../js/auth.js"></script>
+<script>
+let regEmail='';
+function nxt(el,nId){ if(el.value.length===1&&nId) document.getElementById(nId).focus(); }
+
+async function doRegister(){
+  const name=document.getElementById('name').value.trim();
+  const company=document.getElementById('company').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  const gst=document.getElementById('gst').value.trim();
+  const license=document.getElementById('license').value.trim();
+  const password=document.getElementById('password').value;
+  const err=document.getElementById('errAlert');
+  const btn=document.getElementById('regBtn');
+  if(!name||!email||!company||!password){err.textContent='Please fill required fields';err.style.display='';return;}
+  if(password.length<6){err.textContent='Password min 6 chars';err.style.display='';return;}
+  err.style.display='none'; btn.disabled=true; btn.textContent='Registering...';
+  try{
+    await apiCall('/auth/operator/register',{method:'POST',body:{name,email,phone,password,company_name:company,gst_number:gst,license_number:license}});
+    regEmail=email;
+    document.getElementById('regForm').style.display='none';
+    document.getElementById('otpForm').style.display='';
+    document.getElementById('otpEmail').textContent=email;
+    document.getElementById('d1').focus();
+  }catch(e){err.textContent=e.message;err.style.display='';btn.disabled=false;btn.textContent='Create Operator Account';}
+}
+
+async function verifyOTP(){
+  const otp=['d1','d2','d3','d4','d5','d6'].map(id=>document.getElementById(id).value).join('');
+  if(otp.length!==6){showToast('Enter 6-digit OTP','error');return;}
+  const btn=document.getElementById('otpBtn');
+  btn.disabled=true; btn.textContent='Verifying...';
+  try{
+    await apiCall('/auth/operator/verify-email',{method:'POST',body:{email:regEmail,otp}});
+    document.getElementById('otpForm').style.display='none';
+    document.getElementById('doneMsg').style.display='';
+  }catch(e){showToast(e.message,'error');btn.disabled=false;btn.textContent='Verify Email';}
+}
+
+async function resend(){
+  try{ await apiCall('/auth/resend-otp',{method:'POST',body:{email:regEmail,type:'SIGNUP'}}); showToast('OTP resent!','success'); }catch(e){}
+}
+</script>
+</body>
+</html>

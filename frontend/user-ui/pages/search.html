@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results – BusConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo">🚌 BusConnect</a>
+    <div class="nav-links">
+      <a href="search.html">Search Buses</a>
+      <a href="wallet.html" id="navWallet" style="display:none">Wallet</a>
+      <a href="bookings.html" id="navBookings" style="display:none">My Bookings</a>
+    </div>
+    <div class="nav-auth">
+      <div id="guestNav">
+        <a href="login.html" class="btn btn-ghost">Login</a>
+        <a href="register.html" class="btn btn-primary">Sign Up</a>
+      </div>
+      <div id="userNav" style="display:none;align-items:center;gap:10px;">
+        <a href="../pages/wallet.html" class="wallet-badge" id="navBalance">₹0</a>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Inline search bar -->
+<div style="background:white;border-bottom:1px solid var(--border);padding:80px 24px 16px;">
+  <div style="max-width:1200px;margin:auto;">
+    <div class="search-card" style="box-shadow:none;border:1px solid var(--border);padding:16px;">
+      <div class="search-row">
+        <div class="search-group">
+          <label>From</label>
+          <input type="text" id="srcCity" placeholder="Departure city" list="cityList">
+        </div>
+        <button class="swap-btn" onclick="swapCities()">⇄</button>
+        <div class="search-group">
+          <label>To</label>
+          <input type="text" id="dstCity" placeholder="Destination city" list="cityList">
+        </div>
+        <div class="search-group" style="max-width:160px">
+          <label>Date</label>
+          <input type="date" id="travelDate">
+        </div>
+        <button class="btn btn-hero-search" onclick="doSearch()">Search →</button>
+      </div>
+      <datalist id="cityList">
+        <option value="Mumbai"><option value="Delhi"><option value="Bangalore">
+        <option value="Hyderabad"><option value="Chennai"><option value="Kolkata">
+        <option value="Pune"><option value="Ahmedabad"><option value="Jaipur">
+      </datalist>
+    </div>
+  </div>
+</div>
+
+<div class="results-page" style="padding-top:32px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="results-header">
+      <h1 id="resultsTitle" style="font-size:28px;font-weight:800;">Search Results</h1>
+      <p class="results-meta" id="resultsMeta"></p>
+    </div>
+
+    <div class="results-layout">
+      <!-- FILTERS -->
+      <aside class="filter-panel">
+        <h3>🔧 Filters</h3>
+        <button class="btn btn-outline btn-sm" onclick="clearFilters()" style="width:100%;margin-bottom:16px;">Clear All</button>
+
+        <div class="filter-group">
+          <h4>Bus Type</h4>
+          <label class="filter-option"><input type="checkbox" value="AC" onchange="applyFilters()"> AC</label>
+          <label class="filter-option"><input type="checkbox" value="NON_AC" onchange="applyFilters()"> Non-AC</label>
+          <label class="filter-option"><input type="checkbox" value="SLEEPER" onchange="applyFilters()"> Sleeper</label>
+          <label class="filter-option"><input type="checkbox" value="VOLVO" onchange="applyFilters()"> Volvo</label>
+          <label class="filter-option"><input type="checkbox" value="LUXURY" onchange="applyFilters()"> Luxury</label>
+        </div>
+
+        <div class="filter-group">
+          <h4>Seating Type</h4>
+          <label class="filter-option"><input type="checkbox" value="SEATER" name="seating" onchange="applyFilters()"> Seater</label>
+          <label class="filter-option"><input type="checkbox" value="SLEEPER" name="seating" onchange="applyFilters()"> Sleeper</label>
+        </div>
+
+        <div class="filter-group">
+          <h4>Departure Time</h4>
+          <label class="filter-option"><input type="checkbox" value="morning" onchange="applyFilters()"> Morning (6–12)</label>
+          <label class="filter-option"><input type="checkbox" value="afternoon" onchange="applyFilters()"> Afternoon (12–18)</label>
+          <label class="filter-option"><input type="checkbox" value="evening" onchange="applyFilters()"> Evening (18–24)</label>
+          <label class="filter-option"><input type="checkbox" value="night" onchange="applyFilters()"> Night (0–6)</label>
+        </div>
+
+        <div class="filter-group">
+          <h4>Price Range (₹)</h4>
+          <div class="price-range">
+            <input type="number" id="minPrice" placeholder="Min" onchange="applyFilters()">
+            <span class="price-range-sep">–</span>
+            <input type="number" id="maxPrice" placeholder="Max" onchange="applyFilters()">
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h4>Sort By</h4>
+          <select class="form-group" style="width:100%;padding:10px;border:2px solid var(--border);border-radius:8px;outline:none;" id="sortBy" onchange="applyFilters()">
+            <option value="departure">Departure Time</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+            <option value="rating">Rating</option>
+            <option value="seats">Most Seats</option>
+          </select>
+        </div>
+      </aside>
+
+      <!-- RESULTS -->
+      <main>
+        <div id="loading" style="text-align:center;padding:80px 0;">
+          <div class="spinner"></div>
+          <p class="loading-text">Finding the best buses for you...</p>
+        </div>
+        <div id="resultsContainer"></div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<script src="../js/auth.js"></script>
+<script>
+let allBuses = [];
+
+const params = new URLSearchParams(window.location.search);
+const FROM = params.get('from') || '';
+const TO = params.get('to') || '';
+const DATE = params.get('date') || '';
+
+document.getElementById('srcCity').value = FROM;
+document.getElementById('dstCity').value = TO;
+document.getElementById('travelDate').value = DATE;
+document.getElementById('travelDate').min = new Date().toISOString().split('T')[0];
+
+document.getElementById('resultsTitle').textContent = `${FROM} → ${TO}`;
+document.getElementById('resultsMeta').textContent = DATE ? `${new Date(DATE).toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})}` : 'All dates';
+
+async function loadBuses() {
+  try {
+    let url = `/operators/schedules/search?source=${encodeURIComponent(FROM)}&destination=${encodeURIComponent(TO)}`;
+    if (DATE) url += `&date=${DATE}`;
+    const data = await apiCall(url);
+    allBuses = data;
+    applyFilters();
+  } catch (err) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('resultsContainer').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🚌</div>
+        <h3>No buses found</h3>
+        <p>Try different dates or routes</p>
+      </div>`;
+  }
+}
+
+function applyFilters() {
+  const busTypeChecks = [...document.querySelectorAll('.filter-option input[value="AC"],input[value="NON_AC"],input[value="SLEEPER"],input[value="VOLVO"],input[value="LUXURY"]')]
+    .filter(el => el.checked).map(el => el.value);
+  const seatingChecks = [...document.querySelectorAll('[name="seating"]')].filter(el => el.checked).map(el => el.value);
+  const timeChecks = [...document.querySelectorAll('input[value="morning"],input[value="afternoon"],input[value="evening"],input[value="night"]')]
+    .filter(el => el.checked).map(el => el.value);
+  const minP = parseFloat(document.getElementById('minPrice').value) || 0;
+  const maxP = parseFloat(document.getElementById('maxPrice').value) || Infinity;
+  const sortBy = document.getElementById('sortBy').value;
+
+  let filtered = allBuses.filter(b => {
+    if (busTypeChecks.length && !busTypeChecks.includes(b.bus_type)) return false;
+    if (seatingChecks.length && !seatingChecks.includes(b.seating_type)) return false;
+    if (b.price_per_seat < minP || b.price_per_seat > maxP) return false;
+    if (timeChecks.length) {
+      const h = new Date(b.departure_time).getHours();
+      const slots = { morning: h>=6&&h<12, afternoon: h>=12&&h<18, evening: h>=18&&h<24, night: h<6 };
+      if (!timeChecks.some(t => slots[t])) return false;
+    }
+    return true;
+  });
+
+  filtered.sort((a, b) => {
+    if (sortBy === 'price_asc') return a.price_per_seat - b.price_per_seat;
+    if (sortBy === 'price_desc') return b.price_per_seat - a.price_per_seat;
+    if (sortBy === 'rating') return (b.operator_rating||0) - (a.operator_rating||0);
+    if (sortBy === 'seats') return b.available_seats - a.available_seats;
+    return new Date(a.departure_time) - new Date(b.departure_time);
+  });
+
+  renderResults(filtered);
+}
+
+function renderResults(buses) {
+  document.getElementById('loading').style.display = 'none';
+  const container = document.getElementById('resultsContainer');
+  if (!buses.length) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><h3>No buses match your filters</h3><p>Try adjusting the filters</p></div>`;
+    return;
+  }
+  document.getElementById('resultsMeta').textContent = `${buses.length} buses found · ${DATE ? new Date(DATE).toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'}) : ''}`;
+  container.innerHTML = buses.map(b => `
+    <div class="bus-card">
+      <div class="bus-card-top">
+        <div class="bus-info-left">
+          <div class="bus-operator">${b.company_name}</div>
+          <div style="margin-bottom:4px;">
+            <span class="bus-type-badge">${b.bus_type.replace('_',' ')}</span>
+            <span class="bus-type-badge" style="background:#e3f2fd;color:#1565c0">${b.seating_type}</span>
+          </div>
+          <div style="color:var(--text-muted);font-size:13px;">${b.bus_name} · ${b.bus_number}</div>
+          <div class="bus-times">
+            <div class="bus-time">
+              <div class="time">${fmtTime(b.departure_time)}</div>
+              <div class="city">${b.source_city}</div>
+            </div>
+            <div class="bus-duration">
+              <div>${b.duration_minutes ? fmtDuration(b.duration_minutes) : ''}</div>
+              <div class="dur-line"></div>
+            </div>
+            <div class="bus-time">
+              <div class="time">${fmtTime(b.arrival_time)}</div>
+              <div class="city">${b.destination_city}</div>
+            </div>
+          </div>
+        </div>
+        <div class="bus-pricing">
+          <div class="bus-price">${fmtINR(b.price_per_seat)}</div>
+          <div class="bus-price-sub">per seat</div>
+          <div class="bus-seats">🪑 ${b.available_seats} seats left</div>
+          ${b.operator_rating > 0 ? `<div class="bus-rating" style="justify-content:flex-end;margin-top:8px;"><span class="star">★</span>${parseFloat(b.operator_rating).toFixed(1)}</div>` : ''}
+        </div>
+      </div>
+      <div class="bus-amenities">
+        ${(Array.isArray(b.amenities) ? b.amenities : JSON.parse(b.amenities||'[]')).map(a=>`<span class="amenity-tag">${a}</span>`).join('')}
+      </div>
+      <div class="bus-actions">
+        <div style="font-size:13px;color:var(--text-muted)">
+          ${fmtDate(b.departure_time)}
+        </div>
+        <button class="btn btn-primary" onclick="selectBus('${b.id}')">
+          Select Seats →
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectBus(scheduleId) {
+  window.location.href = `seat-selection.html?schedule=${scheduleId}`;
+}
+
+function doSearch() {
+  const src = document.getElementById('srcCity').value.trim();
+  const dst = document.getElementById('dstCity').value.trim();
+  const date = document.getElementById('travelDate').value;
+  if (!src || !dst) { showToast('Please enter source and destination', 'error'); return; }
+  window.location.href = `search.html?from=${encodeURIComponent(src)}&to=${encodeURIComponent(dst)}&date=${date}`;
+}
+
+function swapCities() {
+  const s = document.getElementById('srcCity');
+  const d = document.getElementById('dstCity');
+  [s.value, d.value] = [d.value, s.value];
+}
+
+function clearFilters() {
+  document.querySelectorAll('.filter-option input').forEach(el => el.checked = false);
+  document.getElementById('minPrice').value = '';
+  document.getElementById('maxPrice').value = '';
+  document.getElementById('sortBy').value = 'departure';
+  applyFilters();
+}
+
+loadBuses();
+</script>
+</body>
+</html>

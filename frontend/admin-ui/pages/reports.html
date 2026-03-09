@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports – Admin</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-logo">🚌 Bus<span>Connect</span> <small style="font-size:10px;opacity:0.6;display:block;font-weight:400;">ADMIN</small></div>
+  <nav class="sidebar-nav">
+    <a href="dashboard.html"><span class="icon">📊</span><span>Dashboard</span></a>
+    <a href="users.html"><span class="icon">👥</span><span>Users</span></a>
+    <a href="operators.html"><span class="icon">🚌</span><span>Operators</span></a>
+    <a href="bookings.html"><span class="icon">🎫</span><span>Bookings</span></a>
+    <a href="promos.html"><span class="icon">🎁</span><span>Promo Codes</span></a>
+    <a href="reports.html" class="active"><span class="icon">📈</span><span>Reports</span></a>
+    <a href="logs.html"><span class="icon">📋</span><span>System Logs</span></a>
+    <a href="wallet.html"><span class="icon">💎</span><span>Wallet</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px;">Logged in as<br><strong style="color:white;" id="adminName">Admin</strong></div>
+    <button class="btn btn-ghost btn-sm" onclick="logout()" style="width:100%;color:white;border-color:rgba(255,255,255,0.2);">Logout</button>
+  </div>
+</aside>
+<main class="main-content">
+  <h1 class="page-title">Reports</h1>
+  <p class="page-subtitle">Revenue analytics and business intelligence</p>
+
+  <!-- Date filter -->
+  <div class="card" style="margin-bottom:20px;">
+    <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
+      <div class="form-group" style="margin:0;"><label>From Date</label><input type="date" id="fromDate" style="padding:9px 12px;border:2px solid #e5e7eb;border-radius:8px;outline:none;font-family:inherit;"></div>
+      <div class="form-group" style="margin:0;"><label>To Date</label><input type="date" id="toDate" style="padding:9px 12px;border:2px solid #e5e7eb;border-radius:8px;outline:none;font-family:inherit;"></div>
+      <button class="btn btn-accent" onclick="loadAll()">Generate Report</button>
+    </div>
+  </div>
+
+  <!-- Bookings by date -->
+  <div class="card">
+    <h3 class="card-title">Bookings by Date</h3>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>Date</th><th>Total Bookings</th><th>Confirmed</th><th>Cancelled</th><th>Revenue</th></tr></thead>
+        <tbody id="bookingsByDate"><tr><td colspan="5" style="text-align:center;padding:24px;color:#6b7280;">Select date range and generate report</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Revenue by operator -->
+  <div class="card">
+    <h3 class="card-title">Revenue by Operator</h3>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>Operator</th><th>Company</th><th>Bookings</th><th>Revenue</th><th>Commission (10%)</th></tr></thead>
+        <tbody id="revenueByOp"><tr><td colspan="5" style="text-align:center;padding:24px;color:#6b7280;">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Top routes -->
+  <div class="card">
+    <h3 class="card-title">Top Routes</h3>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Route</th><th>Bookings</th><th>Revenue</th></tr></thead>
+        <tbody id="topRoutes"><tr><td colspan="4" style="text-align:center;padding:24px;color:#6b7280;">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script src="../js/app.js"></script>
+<script>
+// Set default date range (last 30 days)
+const today = new Date().toISOString().split('T')[0];
+const ago30 = new Date(Date.now() - 30*24*60*60*1000).toISOString().split('T')[0];
+document.getElementById('fromDate').value = ago30;
+document.getElementById('toDate').value = today;
+
+async function loadAll() {
+  if (!requireAuth()) return;
+  const from=document.getElementById('fromDate').value;
+  const to=document.getElementById('toDate').value;
+  try {
+    const [byDate, byOp, topRoutes] = await Promise.all([
+      apiCall(`/admin/reports/bookings?from_date=${from}&to_date=${to}`),
+      apiCall('/admin/reports/revenue-by-operator'),
+      apiCall('/admin/reports/top-routes')
+    ]);
+
+    document.getElementById('bookingsByDate').innerHTML = byDate.length ? byDate.map(r=>`
+      <tr>
+        <td><strong>${fmtDate(r.date)}</strong></td>
+        <td>${r.total_bookings}</td>
+        <td style="color:#059669;">${r.confirmed}</td>
+        <td style="color:#dc2626;">${r.cancelled}</td>
+        <td><strong>${fmtINR(r.revenue)}</strong></td>
+      </tr>`).join('') : '<tr><td colspan="5" style="text-align:center;padding:24px;color:#6b7280;">No data for selected period</td></tr>';
+
+    document.getElementById('revenueByOp').innerHTML = byOp.length ? byOp.map(r=>`
+      <tr>
+        <td><strong>${r.operator_name}</strong></td>
+        <td>${r.company_name}</td>
+        <td>${r.total_bookings}</td>
+        <td><strong>${fmtINR(r.total_revenue)}</strong></td>
+        <td style="color:#1A56DB;">${fmtINR(r.admin_commission)}</td>
+      </tr>`).join('') : '<tr><td colspan="5" style="text-align:center;padding:24px;color:#6b7280;">No operator data</td></tr>';
+
+    document.getElementById('topRoutes').innerHTML = topRoutes.length ? topRoutes.map((r,i)=>`
+      <tr>
+        <td><strong style="color:#1A56DB;">#${i+1}</strong></td>
+        <td><strong>${r.source_city} → ${r.destination_city}</strong></td>
+        <td>${r.booking_count}</td>
+        <td><strong>${fmtINR(r.total_revenue)}</strong></td>
+      </tr>`).join('') : '<tr><td colspan="4" style="text-align:center;padding:24px;color:#6b7280;">No route data</td></tr>';
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+}
+
+loadAll();
+</script>
+</body>
+</html>

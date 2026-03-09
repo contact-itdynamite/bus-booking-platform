@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register – BusConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo">🚌 BusConnect</a>
+    <div class="nav-auth">
+      <a href="login.html" class="btn btn-ghost">Login</a>
+    </div>
+  </div>
+</nav>
+
+<div class="form-page">
+  <div class="form-card">
+    <div class="form-logo">🚌 BusConnect</div>
+    <h1 class="form-title">Create account</h1>
+    <p class="form-sub">Get ₹1,000 welcome bonus on signup!</p>
+
+    <div id="errorAlert" class="alert alert-error" style="display:none"></div>
+    <div id="successAlert" class="alert alert-success" style="display:none"></div>
+
+    <div id="registerForm">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Your full name">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="phone" placeholder="+91 98765 43210">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Min 6 characters">
+      </div>
+      <button class="btn btn-primary btn-block btn-lg" onclick="doRegister()" id="regBtn">Create Account</button>
+      <div class="form-divider" style="margin-top:16px">
+        Already have an account? <a href="login.html" class="form-link">Sign in</a>
+      </div>
+    </div>
+
+    <!-- OTP Verification -->
+    <div id="otpForm" style="display:none">
+      <h2 class="form-title" style="font-size:22px">Verify Email</h2>
+      <p class="form-sub">We sent a 6-digit code to <strong id="otpEmail"></strong></p>
+      <div class="otp-input-row">
+        <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" id="d1" oninput="otpNext(this,'d2')">
+        <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" id="d2" oninput="otpNext(this,'d3')">
+        <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" id="d3" oninput="otpNext(this,'d4')">
+        <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" id="d4" oninput="otpNext(this,'d5')">
+        <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" id="d5" oninput="otpNext(this,'d6')">
+        <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" id="d6" oninput="otpNext(this,null)">
+      </div>
+      <button class="btn btn-primary btn-block btn-lg" onclick="verifyOTP()" id="otpBtn">Verify & Continue</button>
+      <div class="form-divider" style="margin-top:12px">
+        Didn't receive? <a href="#" class="form-link" onclick="resendOTP()">Resend OTP</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/auth.js"></script>
+<script>
+let registeredEmail = '';
+
+function otpNext(el, nextId) {
+  if (el.value.length === 1 && nextId) document.getElementById(nextId).focus();
+}
+
+async function doRegister() {
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const password = document.getElementById('password').value;
+
+  const errorAlert = document.getElementById('errorAlert');
+  const btn = document.getElementById('regBtn');
+
+  if (!name || !email || !password) { errorAlert.textContent='Please fill required fields'; errorAlert.style.display=''; return; }
+  if (password.length < 6) { errorAlert.textContent='Password must be at least 6 characters'; errorAlert.style.display=''; return; }
+  errorAlert.style.display = 'none';
+  btn.disabled = true; btn.textContent = 'Creating account...';
+
+  try {
+    await apiCall('/auth/user/register', { method: 'POST', body: { name, email, phone, password } });
+    registeredEmail = email;
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('otpForm').style.display = '';
+    document.getElementById('otpEmail').textContent = email;
+    document.getElementById('d1').focus();
+    showToast('Account created! Check your email for OTP', 'success');
+  } catch (err) {
+    errorAlert.textContent = err.message; errorAlert.style.display = '';
+    btn.disabled = false; btn.textContent = 'Create Account';
+  }
+}
+
+async function verifyOTP() {
+  const otp = ['d1','d2','d3','d4','d5','d6'].map(id => document.getElementById(id).value).join('');
+  if (otp.length !== 6) { showToast('Enter 6-digit OTP', 'error'); return; }
+
+  const btn = document.getElementById('otpBtn');
+  btn.disabled = true; btn.textContent = 'Verifying...';
+
+  try {
+    await apiCall('/auth/user/verify-email', { method: 'POST', body: { email: registeredEmail, otp } });
+    showToast('Email verified! ₹1,000 bonus credited. Redirecting to login...', 'success');
+    setTimeout(() => window.location.href = 'login.html', 2000);
+  } catch (err) {
+    showToast(err.message, 'error');
+    btn.disabled = false; btn.textContent = 'Verify & Continue';
+  }
+}
+
+async function resendOTP() {
+  try {
+    await apiCall('/auth/resend-otp', { method: 'POST', body: { email: registeredEmail, type: 'SIGNUP' } });
+    showToast('OTP resent!', 'success');
+  } catch (err) { showToast('Failed to resend OTP', 'error'); }
+}
+</script>
+</body>
+</html>

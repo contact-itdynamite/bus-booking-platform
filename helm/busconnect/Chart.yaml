@@ -1,0 +1,15 @@
+apiVersion: v2
+name: busconnect
+description: BusConnect - Production Microservices Bus Booking Platform
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - bus-booking
+  - microservices
+  - nodejs
+home: https://github.com/yourorg/busconnect
+maintainers:
+  - name: BusConnect Team
+    email: contact.busconnect@gmail.com
+dependencies: []

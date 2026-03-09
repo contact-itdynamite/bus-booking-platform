@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bookings – BusConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo">🚌 BusConnect</a>
+    <div class="nav-links">
+      <a href="search.html">Search Buses</a>
+      <a href="wallet.html" id="navWallet">Wallet</a>
+      <a href="bookings.html" id="navBookings" style="color:var(--blue);">My Bookings</a>
+      <a href="profile.html" id="navProfile">Profile</a>
+    </div>
+    <div class="nav-auth">
+      <div id="guestNav"><a href="login.html" class="btn btn-ghost">Login</a></div>
+      <div id="userNav" style="display:none;align-items:center;gap:10px;">
+        <a href="../pages/wallet.html" class="wallet-badge" id="navBalance">₹0</a>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <h1>My Bookings</h1>
+    <p>All your travel history in one place</p>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="container">
+    <!-- Filter tabs -->
+    <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;">
+      <button class="btn btn-primary btn-sm" onclick="filterBookings('')" id="tab-all">All</button>
+      <button class="btn btn-ghost btn-sm" onclick="filterBookings('CONFIRMED')" id="tab-CONFIRMED">Confirmed</button>
+      <button class="btn btn-ghost btn-sm" onclick="filterBookings('PENDING')" id="tab-PENDING">Pending</button>
+      <button class="btn btn-ghost btn-sm" onclick="filterBookings('CANCELLED')" id="tab-CANCELLED">Cancelled</button>
+    </div>
+
+    <div id="bookingsContainer"><div class="spinner"></div></div>
+    <div id="paginationContainer"></div>
+  </div>
+</div>
+
+<script src="../js/auth.js"></script>
+<script>
+let currentPage = 1;
+let currentFilter = '';
+
+async function loadBookings(page=1, status='') {
+  if (!requireAuth()) return;
+  currentPage = page;
+  currentFilter = status;
+  try {
+    let url = `/bookings/my?page=${page}&limit=10`;
+    if (status) url += `&status=${status}`;
+    const data = await apiCall(url);
+    renderBookings(data.bookings);
+    renderPagination(document.getElementById('paginationContainer'), page, data.total, 10, (p) => loadBookings(p, currentFilter));
+  } catch(err) {
+    document.getElementById('bookingsContainer').innerHTML = `<div class="empty-state"><div class="empty-icon">😕</div><h3>Failed to load bookings</h3></div>`;
+  }
+}
+
+function filterBookings(status) {
+  document.querySelectorAll('[id^="tab-"]').forEach(el => el.className = 'btn btn-ghost btn-sm');
+  const tabId = status ? `tab-${status}` : 'tab-all';
+  document.getElementById(tabId).className = 'btn btn-primary btn-sm';
+  loadBookings(1, status);
+}
+
+function renderBookings(bookings) {
+  const container = document.getElementById('bookingsContainer');
+  if (!bookings.length) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">🎫</div><h3>No bookings found</h3><p>Book your first bus ticket!</p><a href="search.html" class="btn btn-primary" style="margin-top:16px;">Search Buses →</a></div>`;
+    return;
+  }
+  const statusColors = { CONFIRMED:'tag-green', PENDING:'tag-orange', CANCELLED:'tag-red', COMPLETED:'tag-blue' };
+  container.innerHTML = bookings.map(b => `
+    <div class="booking-card" onclick="window.location.href='booking-detail.html?id=${b.id}'" style="cursor:pointer;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <div>
+          <div class="booking-ref">${b.booking_reference}</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:2px;">Booked on ${fmtDate(b.created_at)}</div>
+        </div>
+        <span class="booking-status ${statusColors[b.status]||'status-pending'}">${b.status}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div style="flex:1;">
+          <div style="font-size:18px;font-weight:700;font-family:'Syne',sans-serif;">${b.source_city} → ${b.destination_city}</div>
+          <div style="color:var(--text-muted);font-size:14px;margin-top:4px;">${b.operator_name} · ${b.bus_name}</div>
+          <div style="color:var(--text-muted);font-size:13px;margin-top:2px;">🕐 ${fmtDateTime(b.departure_time)}</div>
+          <div style="color:var(--text-muted);font-size:13px;">🪑 Seats: ${JSON.parse(b.seats_booked||'[]').join(', ')}</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:24px;font-weight:800;color:var(--blue);font-family:'Syne',sans-serif;">${fmtINR(b.final_amount)}</div>
+          <div style="font-size:12px;color:var(--text-muted);">
+            <span class="tag ${b.payment_status==='PAID'?'tag-green':b.payment_status==='REFUNDED'?'tag-blue':'tag-orange'}">${b.payment_status}</span>
+          </div>
+          <div style="margin-top:8px;color:var(--blue);font-size:13px;font-weight:600;">View Details →</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+loadBookings();
+</script>
+</body>
+</html>

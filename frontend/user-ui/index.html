@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg==">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BusConnect – Book Bus Tickets Online</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">🚌 BusConnect</a>
+    <div class="nav-links" id="navLinks">
+      <a href="pages/search.html">Search Buses</a>
+      <a href="pages/wallet.html" id="navWallet" style="display:none">Wallet</a>
+      <a href="pages/bookings.html" id="navBookings" style="display:none">My Bookings</a>
+      <a href="pages/profile.html" id="navProfile" style="display:none">Profile</a>
+    </div>
+    <div class="nav-auth">
+      <div id="guestNav">
+        <a href="pages/login.html" class="btn btn-ghost">Login</a>
+        <a href="pages/register.html" class="btn btn-primary">Sign Up</a>
+      </div>
+      <div id="userNav" style="display:none;align-items:center;gap:10px;">
+        <a href="pages/wallet.html" class="wallet-badge" id="navBalance">₹0</a>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">India's Fastest Bus Booking</div>
+    <h1 class="hero-title">Travel <span class="hero-accent">smarter</span>,<br>arrive <span class="hero-accent">happier</span></h1>
+    <p class="hero-sub">Book from 5,000+ routes across India. Instant confirmation, real-time seats, zero hassle.</p>
+
+    <!-- SEARCH BOX -->
+    <div class="search-card" id="searchCard">
+      <div class="search-row">
+        <div class="search-fields-row">
+          <div class="search-group">
+            <label>From</label>
+            <input type="text" id="srcCity" placeholder="Departure city" list="cityList" autocomplete="off">
+          </div>
+          <button class="swap-btn" onclick="swapCities()" title="Swap">⇄</button>
+          <div class="search-group">
+            <label>To</label>
+            <input type="text" id="dstCity" placeholder="Destination city" list="cityList" autocomplete="off">
+          </div>
+          <div class="search-group search-group-date">
+            <label>Date</label>
+            <input type="date" id="travelDate" min="">
+          </div>
+        </div>
+        <button class="btn btn-hero-search" onclick="doSearch()">Search Buses →</button>
+      </div>
+      <datalist id="cityList">
+        <option value="Mumbai"><option value="Delhi"><option value="Bangalore">
+        <option value="Hyderabad"><option value="Chennai"><option value="Kolkata">
+        <option value="Pune"><option value="Ahmedabad"><option value="Jaipur">
+        <option value="Surat"><option value="Lucknow"><option value="Nagpur">
+        <option value="Indore"><option value="Bhopal"><option value="Coimbatore">
+      </datalist>
+    </div>
+  </div>
+</section>
+
+<!-- POPULAR ROUTES -->
+<section class="section popular-routes">
+  <div class="container">
+    <h2 class="section-title">Popular Routes</h2>
+    <p class="section-sub">Thousands travel these routes daily</p>
+    <div class="routes-grid" id="popularRoutes">
+      <div class="route-card" onclick="quickSearch('Mumbai','Pune')">
+        <div class="route-cities">Mumbai → Pune</div>
+        <div class="route-meta">~3 hrs · From ₹299</div>
+        <div class="route-tag">Hot 🔥</div>
+      </div>
+      <div class="route-card" onclick="quickSearch('Bangalore','Chennai')">
+        <div class="route-cities">Bangalore → Chennai</div>
+        <div class="route-meta">~6 hrs · From ₹499</div>
+        <div class="route-tag">Popular</div>
+      </div>
+      <div class="route-card" onclick="quickSearch('Delhi','Jaipur')">
+        <div class="route-cities">Delhi → Jaipur</div>
+        <div class="route-meta">~5 hrs · From ₹399</div>
+        <div class="route-tag">Trending</div>
+      </div>
+      <div class="route-card" onclick="quickSearch('Hyderabad','Bangalore')">
+        <div class="route-cities">Hyderabad → Bangalore</div>
+        <div class="route-meta">~10 hrs · From ₹699</div>
+        <div class="route-tag">Overnight</div>
+      </div>
+      <div class="route-card" onclick="quickSearch('Mumbai','Goa')">
+        <div class="route-cities">Mumbai → Goa</div>
+        <div class="route-meta">~8 hrs · From ₹599</div>
+        <div class="route-tag">Weekend</div>
+      </div>
+      <div class="route-card" onclick="quickSearch('Chennai','Coimbatore')">
+        <div class="route-cities">Chennai → Coimbatore</div>
+        <div class="route-meta">~5 hrs · From ₹349</div>
+        <div class="route-tag">Daily</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section features">
+  <div class="container">
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Instant Booking</h3>
+        <p>Confirm your seat in under 60 seconds with our one-click booking system</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>Wallet Credits</h3>
+        <p>Earn ₹1,000 on signup and use credits for future bookings seamlessly</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎫</div>
+        <h3>Promo Codes</h3>
+        <p>Unlock exclusive discounts and special offers for every journey</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Safe & Secure</h3>
+        <p>All transactions encrypted. Your data stays private and protected</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">🚌 BusConnect</div>
+        <p class="footer-tagline">Making every journey memorable</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <a href="pages/search.html">Search Buses</a>
+        <a href="pages/bookings.html">My Bookings</a>
+        <a href="pages/wallet.html">Wallet</a>
+      </div>
+      <div>
+        <h4>For Operators</h4>
+        <a href="../operator-ui/index.html">Operator Login</a>
+        <a href="../operator-ui/pages/register.html">Register Fleet</a>
+      </div>
+      <div>
+        <h4>Admin</h4>
+        <a href="../admin-ui/index.html">Admin Portal</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BusConnect. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script>
+  // Set min date to today
+  document.getElementById('travelDate').min = new Date().toISOString().split('T')[0];
+  document.getElementById('travelDate').value = new Date().toISOString().split('T')[0];
+
+  function swapCities() {
+    const s = document.getElementById('srcCity');
+    const d = document.getElementById('dstCity');
+    [s.value, d.value] = [d.value, s.value];
+  }
+
+  function doSearch() {
+    const src = document.getElementById('srcCity').value.trim();
+    const dst = document.getElementById('dstCity').value.trim();
+    const date = document.getElementById('travelDate').value;
+    if (!src || !dst) { showToast('Please enter source and destination', 'error'); return; }
+    window.location.href = `pages/search.html?from=${encodeURIComponent(src)}&to=${encodeURIComponent(dst)}&date=${date}`;
+  }
+
+  function quickSearch(src, dst) {
+    document.getElementById('srcCity').value = src;
+    document.getElementById('dstCity').value = dst;
+    doSearch();
+  }
+</script>
+</body>
+</html>

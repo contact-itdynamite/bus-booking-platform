@@ -1,0 +1,182 @@
+{{/* ── Helper macro to render a microservice Deployment + Service ── */}}
+
+{{- define "busconnect.microservice" -}}
+{{- $svc := .svc -}}
+{{- $name := .name -}}
+{{- $root := .root -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $name }}
+  namespace: {{ include "busconnect.namespace" $root }}
+  labels:
+    app.kubernetes.io/name: {{ $name }}
+    {{- include "busconnect.labels" $root | nindent 4 }}
+spec:
+  replicas: {{ $svc.replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ $name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ $name }}
+    spec:
+      initContainers:
+        - name: wait-for-postgres
+          image: busybox:1.35
+          command: ['sh', '-c', 'until nc -z postgres-service 5432; do echo waiting for postgres; sleep 3; done']
+      containers:
+        - name: {{ $name }}
+          image: "{{ $root.Values.global.imageRegistry }}{{ $svc.image }}:{{ $root.Values.global.imageTag | default "latest" }}"
+          imagePullPolicy: {{ $root.Values.global.imagePullPolicy }}
+          ports:
+            - containerPort: {{ $svc.port }}
+          env:
+            - name: PORT
+              value: {{ $svc.port | quote }}
+            {{- include "busconnect.commonEnv" $root | nindent 12 }}
+            {{- if $svc.extraEnv }}
+            {{- toYaml $svc.extraEnv | nindent 12 }}
+            {{- end }}
+          resources:
+            {{- toYaml $svc.resources | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ $svc.port }}
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ $svc.port }}
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+  namespace: {{ include "busconnect.namespace" $root }}
+  labels:
+    app.kubernetes.io/name: {{ $name }}
+    {{- include "busconnect.labels" $root | nindent 4 }}
+spec:
+  selector:
+    app.kubernetes.io/name: {{ $name }}
+  ports:
+    - port: {{ $svc.port }}
+      targetPort: {{ $svc.port }}
+  type: ClusterIP
+{{- end }}
+
+{{/* ── Render each service ── */}}
+
+{{- if .Values.services.auth.enabled }}
+{{- include "busconnect.microservice" (dict "name" "auth-service" "svc" .Values.services.auth "root" .) }}
+{{- end }}
+
+{{- if .Values.services.user.enabled }}
+{{- include "busconnect.microservice" (dict "name" "user-service" "svc" .Values.services.user "root" .) }}
+{{- end }}
+
+{{- if .Values.services.operator.enabled }}
+{{- include "busconnect.microservice" (dict "name" "operator-service" "svc" .Values.services.operator "root" .) }}
+{{- end }}
+
+{{- if .Values.services.booking.enabled }}
+{{- include "busconnect.microservice" (dict "name" "booking-service" "svc" .Values.services.booking "root" .) }}
+{{- end }}
+
+{{- if .Values.services.wallet.enabled }}
+{{- include "busconnect.microservice" (dict "name" "wallet-service" "svc" .Values.services.wallet "root" .) }}
+{{- end }}
+
+{{- if .Values.services.promo.enabled }}
+{{- include "busconnect.microservice" (dict "name" "promo-service" "svc" .Values.services.promo "root" .) }}
+{{- end }}
+
+{{- if .Values.services.admin.enabled }}
+{{- include "busconnect.microservice" (dict "name" "admin-service" "svc" .Values.services.admin "root" .) }}
+{{- end }}
+
+{{- if .Values.services.notification.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  namespace: {{ include "busconnect.namespace" . }}
+  labels:
+    app.kubernetes.io/name: notification-service
+    {{- include "busconnect.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.services.notification.replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: notification-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: notification-service
+    spec:
+      initContainers:
+        - name: wait-for-postgres
+          image: busybox:1.35
+          command: ['sh', '-c', 'until nc -z postgres-service 5432; do echo waiting for postgres; sleep 3; done']
+      containers:
+        - name: notification-service
+          image: "{{ .Values.global.imageRegistry }}{{ .Values.services.notification.image }}:{{ .Values.global.imageTag | default "latest" }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.services.notification.port }}
+          env:
+            - name: PORT
+              value: {{ .Values.services.notification.port | quote }}
+            - name: SMTP_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: busconnect-config
+                  key: SMTP_HOST
+            - name: SMTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: busconnect-config
+                  key: SMTP_PORT
+            - name: SMTP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: busconnect-secret
+                  key: SMTP_USER
+            - name: SMTP_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: busconnect-secret
+                  key: SMTP_PASS
+            {{- include "busconnect.commonEnv" . | nindent 12 }}
+          resources:
+            {{- toYaml .Values.services.notification.resources | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.services.notification.port }}
+            initialDelaySeconds: 15
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  namespace: {{ include "busconnect.namespace" . }}
+spec:
+  selector:
+    app.kubernetes.io/name: notification-service
+  ports:
+    - port: {{ .Values.services.notification.port }}
+      targetPort: {{ .Values.services.notification.port }}
+  type: ClusterIP
+{{- end }}

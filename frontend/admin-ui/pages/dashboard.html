@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard – BusConnect</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-logo">🚌 Bus<span>Connect</span> <small style="font-size:10px;opacity:0.6;display:block;font-weight:400;">ADMIN</small></div>
+  <nav class="sidebar-nav">
+    <a href="dashboard.html" class="active"><span class="icon">📊</span><span>Dashboard</span></a>
+    <a href="users.html"><span class="icon">👥</span><span>Users</span></a>
+    <a href="operators.html"><span class="icon">🚌</span><span>Operators</span></a>
+    <a href="bookings.html"><span class="icon">🎫</span><span>Bookings</span></a>
+    <a href="promos.html"><span class="icon">🎁</span><span>Promo Codes</span></a>
+    <a href="reports.html"><span class="icon">📈</span><span>Reports</span></a>
+    <a href="logs.html"><span class="icon">📋</span><span>System Logs</span></a>
+    <a href="wallet.html"><span class="icon">💎</span><span>Wallet</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px;">Logged in as<br><strong style="color:white;" id="adminName">Admin</strong></div>
+    <button class="btn btn-ghost btn-sm" onclick="logout()" style="width:100%;color:white;border-color:rgba(255,255,255,0.2);">Logout</button>
+  </div>
+</aside>
+
+<main class="main-content">
+  <h1 class="page-title">Dashboard</h1>
+  <p class="page-subtitle">Platform overview and key metrics</p>
+
+  <!-- Admin Wallet -->
+  <div class="wallet-mega">
+    <div style="font-size:11px;letter-spacing:1px;opacity:0.7;text-transform:uppercase;margin-bottom:6px;">Admin Wallet Balance</div>
+    <div style="font-family:'Syne',sans-serif;font-size:42px;font-weight:800;" id="adminWalBal">₹—</div>
+    <div style="margin-top:8px;opacity:0.7;font-size:13px;">Includes ₹10 Crore initial + all commissions earned (10% per booking)</div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid" id="statsGrid">
+    <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-value" id="sUsers">—</div><div class="stat-label">Total Users</div><div class="bar"></div></div>
+    <div class="stat-card"><div class="stat-icon">🚌</div><div class="stat-value" id="sOps">—</div><div class="stat-label">Active Operators</div><div class="bar"></div></div>
+    <div class="stat-card"><div class="stat-icon">🚍</div><div class="stat-value" id="sBuses">—</div><div class="stat-label">Total Buses</div><div class="bar"></div></div>
+    <div class="stat-card"><div class="stat-icon">🎫</div><div class="stat-value" id="sBookings">—</div><div class="stat-label">Confirmed Bookings</div><div class="bar"></div></div>
+    <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-value" id="sRevenue">—</div><div class="stat-label">Total Revenue</div><div class="bar"></div></div>
+    <div class="stat-card" style="border-color:#fed7aa;"><div class="stat-icon">⏳</div><div class="stat-value" id="sPendingOps" style="color:#d97706;">—</div><div class="stat-label">Pending Operators</div><div class="bar" style="background:linear-gradient(90deg,#d97706,#f59e0b);"></div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+    <!-- Recent bookings -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title" style="margin:0;">Recent Bookings</h3>
+        <a href="bookings.html" class="btn btn-ghost btn-sm">View All</a>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="data-table"><thead><tr><th>Ref</th><th>User</th><th>Amount</th><th>Status</th></tr></thead>
+        <tbody id="recentBookings"><tr><td colspan="4" style="text-align:center;padding:24px;color:#6b7280;">Loading...</td></tr></tbody></table>
+      </div>
+    </div>
+    <!-- Top routes -->
+    <div class="card">
+      <h3 class="card-title">Top Routes</h3>
+      <div id="topRoutes" style="display:flex;flex-direction:column;gap:10px;"></div>
+    </div>
+  </div>
+</main>
+
+<script src="../js/app.js"></script>
+<script>
+async function init() {
+  if (!requireAuth()) return;
+  try {
+    const [dash, wallet] = await Promise.all([
+      apiCall('/admin/dashboard'),
+      apiCall('/wallet/balance')
+    ]);
+    const s = dash.stats;
+    document.getElementById('adminWalBal').textContent = fmtINR(wallet.balance);
+    document.getElementById('sUsers').textContent = s.total_users;
+    document.getElementById('sOps').textContent = s.total_operators;
+    document.getElementById('sBuses').textContent = s.total_buses;
+    document.getElementById('sBookings').textContent = s.total_bookings;
+    document.getElementById('sRevenue').textContent = fmtINR(s.total_revenue);
+    document.getElementById('sPendingOps').textContent = s.pending_operators;
+
+    const bm = { CONFIRMED:'badge-green', PENDING:'badge-orange', CANCELLED:'badge-red' };
+    document.getElementById('recentBookings').innerHTML = (dash.recent_bookings||[]).map(b=>`
+      <tr>
+        <td><strong style="color:#1A56DB;font-size:12px;">${b.booking_reference}</strong></td>
+        <td style="font-size:12px;">${b.user_name}</td>
+        <td><strong>${fmtINR(b.final_amount)}</strong></td>
+        <td><span class="badge ${bm[b.status]||'badge-gray'}">${b.status}</span></td>
+      </tr>`).join('') || '<tr><td colspan="4" style="text-align:center;padding:24px;color:#6b7280;">No bookings</td></tr>';
+
+    document.getElementById('topRoutes').innerHTML = (dash.top_routes||[]).map((r,i)=>`
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:#f9fafb;border-radius:8px;">
+        <div>
+          <span style="font-size:12px;font-weight:700;color:#9ca3af;margin-right:8px;">#${i+1}</span>
+          <strong style="font-size:14px;">${r.source_city} → ${r.destination_city}</strong>
+        </div>
+        <div style="text-align:right;font-size:13px;">
+          <div style="font-weight:700;">${r.booking_count} bookings</div>
+          <div style="color:#6b7280;">${fmtINR(r.total_revenue)}</div>
+        </div>
+      </div>`).join('') || '<p style="color:#6b7280;text-align:center;padding:20px;">No data yet</p>';
+  } catch(e) { showToast('Failed to load dashboard: '+e.message,'error'); }
+}
+init();
+</script>
+</body>
+</html>

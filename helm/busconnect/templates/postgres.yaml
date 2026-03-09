@@ -1,0 +1,93 @@
+{{- if .Values.postgres.enabled }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: {{ include "busconnect.namespace" . }}
+  labels:
+    {{- include "busconnect.labels" . | nindent 4 }}
+spec:
+  accessModes: [ReadWriteOnce]
+  {{- if .Values.postgres.storageClass }}
+  storageClassName: {{ .Values.postgres.storageClass }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.postgres.storage }}
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: {{ include "busconnect.namespace" . }}
+  labels:
+    app.kubernetes.io/name: postgres
+    {{- include "busconnect.labels" . | nindent 4 }}
+spec:
+  serviceName: postgres-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: postgres
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: {{ .Values.postgres.image }}
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: {{ .Values.postgres.database }}
+            - name: POSTGRES_USER
+              value: {{ .Values.postgres.user }}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: busconnect-secret
+                  key: DB_PASSWORD
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+          resources:
+            {{- toYaml .Values.postgres.resources | nindent 12 }}
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", {{ .Values.postgres.user | quote }}]
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["pg_isready", "-U", {{ .Values.postgres.user | quote }}]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  namespace: {{ include "busconnect.namespace" . }}
+  labels:
+    app.kubernetes.io/name: postgres
+    {{- include "busconnect.labels" . | nindent 4 }}
+spec:
+  selector:
+    app.kubernetes.io/name: postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
+  clusterIP: None   # Headless for StatefulSet
+{{- end }}

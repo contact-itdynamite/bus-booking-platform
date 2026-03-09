@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operators – Admin</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-logo">🚌 Bus<span>Connect</span> <small style="font-size:10px;opacity:0.6;display:block;font-weight:400;">ADMIN</small></div>
+  <nav class="sidebar-nav">
+    <a href="dashboard.html"><span class="icon">📊</span><span>Dashboard</span></a>
+    <a href="users.html"><span class="icon">👥</span><span>Users</span></a>
+    <a href="operators.html" class="active"><span class="icon">🚌</span><span>Operators</span></a>
+    <a href="bookings.html"><span class="icon">🎫</span><span>Bookings</span></a>
+    <a href="promos.html"><span class="icon">🎁</span><span>Promo Codes</span></a>
+    <a href="reports.html"><span class="icon">📈</span><span>Reports</span></a>
+    <a href="logs.html"><span class="icon">📋</span><span>System Logs</span></a>
+    <a href="wallet.html"><span class="icon">💎</span><span>Wallet</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px;">Logged in as<br><strong style="color:white;" id="adminName">Admin</strong></div>
+    <button class="btn btn-ghost btn-sm" onclick="logout()" style="width:100%;color:white;border-color:rgba(255,255,255,0.2);">Logout</button>
+  </div>
+</aside>
+<main class="main-content">
+  <h1 class="page-title">Operators</h1>
+  <p class="page-subtitle">Manage bus operators and approvals</p>
+
+  <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center;">
+    <button class="btn btn-accent btn-sm" onclick="load('pending')" id="tab-pending">⏳ Pending Approval</button>
+    <button class="btn btn-ghost btn-sm" onclick="load('approved')" id="tab-approved">✅ Approved</button>
+    <button class="btn btn-ghost btn-sm" onclick="load('blocked')" id="tab-blocked">🚫 Blocked</button>
+    <button class="btn btn-ghost btn-sm" onclick="load('')" id="tab-all">All</button>
+  </div>
+
+  <div class="card">
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>Company</th><th>Contact</th><th>GST / License</th><th>Rating</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="tbody"><tr><td colspan="6" style="text-align:center;padding:32px;color:#6b7280;">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script src="../js/app.js"></script>
+<script>
+let currentStatus = 'pending';
+
+async function load(status='pending') {
+  if (!requireAuth()) return;
+  currentStatus = status;
+  ['pending','approved','blocked','all'].forEach(s => {
+    const el=document.getElementById(`tab-${s}`); if(el) el.className='btn btn-ghost btn-sm';
+  });
+  const activeTab = document.getElementById(`tab-${status||'all'}`);
+  if (activeTab) activeTab.className='btn btn-accent btn-sm';
+
+  try {
+    let url = '/operators?limit=50';
+    if (status) url += `&status=${status}`;
+    const data = await apiCall(url);
+    const ops = data.operators || data;
+    document.getElementById('tbody').innerHTML = ops.length ? ops.map(op=>`
+      <tr>
+        <td>
+          <div style="font-weight:700;">${op.company_name}</div>
+          <div style="font-size:12px;color:#6b7280;">${op.name}</div>
+        </td>
+        <td>
+          <div style="font-size:13px;">${op.email}</div>
+          <div style="font-size:12px;color:#6b7280;">${op.phone||'—'}</div>
+        </td>
+        <td style="font-size:12px;color:#6b7280;">${op.gst_number||'—'}<br>${op.license_number||'—'}</td>
+        <td>${op.rating > 0 ? `⭐ ${parseFloat(op.rating).toFixed(1)} (${op.total_ratings})` : '—'}</td>
+        <td>
+          <span class="badge ${op.is_blocked?'badge-red':op.is_approved?'badge-green':op.is_verified?'badge-orange':'badge-gray'}">
+            ${op.is_blocked?'Blocked':op.is_approved?'Approved':op.is_verified?'Pending':'Unverified'}
+          </span>
+        </td>
+        <td>
+          <div style="display:flex;gap:4px;flex-wrap:wrap;">
+            ${!op.is_approved && !op.is_blocked ? `<button class="btn btn-success btn-sm" onclick="approve('${op.id}',true)">Approve</button>` : ''}
+            ${op.is_approved && !op.is_blocked ? `<button class="btn btn-warn btn-sm" onclick="approve('${op.id}',false)">Unapprove</button>` : ''}
+            ${!op.is_blocked ? `<button class="btn btn-danger btn-sm" onclick="block('${op.id}',true)">Block</button>` : `<button class="btn btn-success btn-sm" onclick="block('${op.id}',false)">Unblock</button>`}
+          </div>
+        </td>
+      </tr>`).join('') : `<tr><td colspan="6" style="text-align:center;padding:40px;color:#6b7280;"><div style="font-size:40px;margin-bottom:12px;">🚌</div>No operators found</td></tr>`;
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+}
+
+async function approve(id, approved) {
+  try {
+    await apiCall(`/operators/${id}/approve`, { method:'PATCH', body:{ approved } });
+    showToast(`Operator ${approved?'approved':'unapproved'}!`, 'success');
+    load(currentStatus);
+  } catch(e) { showToast(e.message,'error'); }
+}
+
+async function block(id, blocked) {
+  try {
+    await apiCall(`/operators/${id}/block`, { method:'PATCH', body:{ blocked } });
+    showToast(`Operator ${blocked?'blocked':'unblocked'}!`, blocked?'warn':'success');
+    load(currentStatus);
+  } catch(e) { showToast(e.message,'error'); }
+}
+
+load('pending');
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedules – Operator Portal</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-logo">🚌 Bus<span>Connect</span></div>
+  <nav class="sidebar-nav">
+    <a href="dashboard.html"><span class="icon">📊</span><span>Dashboard</span></a>
+    <a href="buses.html"><span class="icon">🚌</span><span>My Buses</span></a>
+    <a href="routes.html"><span class="icon">🗺️</span><span>Routes</span></a>
+    <a href="schedules.html" class="active"><span class="icon">📅</span><span>Schedules</span></a>
+    <a href="bookings.html"><span class="icon">🎫</span><span>Bookings</span></a>
+    <a href="wallet.html"><span class="icon">💰</span><span>Wallet</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user" id="sidebarUser"><strong>Operator</strong></div>
+    <button class="btn btn-ghost btn-sm" onclick="logout()" style="width:100%;">Logout</button>
+  </div>
+</aside>
+<main class="main-content">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+    <div><h1 class="page-title">Schedules</h1><p class="page-subtitle">Manage trip schedules</p></div>
+    <button class="btn btn-accent" onclick="openSchedModal()">+ Add Schedule</button>
+  </div>
+  <div class="card" id="schedCard"><div style="text-align:center;padding:40px;">Loading...</div></div>
+</main>
+
+<div class="modal-overlay" id="schedModal">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('schedModal').classList.remove('active')">×</button>
+    <h2 class="modal-title">Add Schedule</h2>
+    <div id="schedAlert" class="alert alert-error" style="display:none;"></div>
+    <div class="form-group"><label>Bus *</label><select id="sBus"><option value="">Select bus</option></select></div>
+    <div class="form-group"><label>Route *</label><select id="sRoute"><option value="">Select route</option></select></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Departure *</label><input type="datetime-local" id="depTime"></div>
+      <div class="form-group"><label>Arrival *</label><input type="datetime-local" id="arrTime"></div>
+    </div>
+    <div class="form-group"><label>Price Per Seat (₹) *</label><input type="number" id="price" placeholder="500" min="1"></div>
+    <div class="form-group"><label>Boarding Points (comma separated)</label><input type="text" id="boarding" placeholder="Mumbai Central, Dadar, Thane"></div>
+    <div class="form-group"><label>Dropping Points (comma separated)</label><input type="text" id="dropping" placeholder="Pune Station, Kothrud, Hinjewadi"></div>
+    <button class="btn btn-accent btn-block" onclick="saveSched()">Create Schedule</button>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+async function openSchedModal() {
+  // Load buses and routes into selects
+  const [buses, routes] = await Promise.all([apiCall('/operators/buses'), apiCall('/operators/routes')]);
+  const bSel = document.getElementById('sBus'); bSel.innerHTML = '<option value="">Select bus</option>';
+  buses.forEach(b => { const o=document.createElement('option'); o.value=b.id; o.textContent=`${b.bus_name} (${b.bus_number})`; bSel.appendChild(o); });
+  const rSel = document.getElementById('sRoute'); rSel.innerHTML = '<option value="">Select route</option>';
+  routes.forEach(r => { const o=document.createElement('option'); o.value=r.id; o.textContent=`${r.source_city} → ${r.destination_city}`; rSel.appendChild(o); });
+  document.getElementById('schedModal').classList.add('active');
+}
+
+async function loadSchedules() {
+  if (!requireAuth()) return;
+  try {
+    const scheds = await apiCall('/operators/schedules');
+    const card = document.getElementById('schedCard');
+    if (!scheds.length) { card.innerHTML = '<div style="text-align:center;padding:60px;color:#64748b;"><div style="font-size:48px;">📅</div><h3 style="font-family:Syne,sans-serif;margin-top:12px;">No schedules yet</h3></div>'; return; }
+    card.innerHTML = `<div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>Route</th><th>Bus</th><th>Departure</th><th>Arrival</th><th>Price</th><th>Seats Left</th><th>Status</th></tr></thead><tbody>
+      ${scheds.map(s => `<tr>
+        <td><strong>${s.source_city} → ${s.destination_city}</strong></td>
+        <td>${s.bus_name}<br><small style="color:#64748b;">${s.bus_number}</small></td>
+        <td style="font-size:13px;">${fmtDateTime(s.departure_time)}</td>
+        <td style="font-size:13px;">${fmtDateTime(s.arrival_time)}</td>
+        <td><strong>${fmtINR(s.price_per_seat)}</strong></td>
+        <td>${s.available_seats} / ${s.total_seats}</td>
+        <td><span class="badge ${s.status==='SCHEDULED'?'badge-green':s.status==='COMPLETED'?'badge-blue':'badge-orange'}">${s.status}</span></td>
+      </tr>`).join('')}
+    </tbody></table></div>`;
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+}
+
+async function saveSched() {
+  const alertEl = document.getElementById('schedAlert');
+  const payload = {
+    bus_id: document.getElementById('sBus').value,
+    route_id: document.getElementById('sRoute').value,
+    departure_time: document.getElementById('depTime').value,
+    arrival_time: document.getElementById('arrTime').value,
+    price_per_seat: parseFloat(document.getElementById('price').value),
+    boarding_points: document.getElementById('boarding').value.split(',').map(s=>s.trim()).filter(Boolean),
+    dropping_points: document.getElementById('dropping').value.split(',').map(s=>s.trim()).filter(Boolean)
+  };
+  if (!payload.bus_id||!payload.route_id||!payload.departure_time||!payload.arrival_time||!payload.price_per_seat) {
+    alertEl.textContent='Fill required fields'; alertEl.style.display=''; return;
+  }
+  alertEl.style.display='none';
+  try {
+    await apiCall('/operators/schedules', { method:'POST', body:payload });
+    showToast('Schedule created!','success');
+    document.getElementById('schedModal').classList.remove('active');
+    loadSchedules();
+  } catch(e) { alertEl.textContent=e.message; alertEl.style.display=''; }
+}
+
+loadSchedules();
+</script>
+</body>
+</html>

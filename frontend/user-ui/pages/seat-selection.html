@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Seats – BusConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo">🚌 BusConnect</a>
+    <div class="nav-auth">
+      <div id="guestNav"><a href="login.html" class="btn btn-ghost">Login</a></div>
+      <div id="userNav" style="display:none;align-items:center;gap:10px;">
+        <a href="../pages/wallet.html" class="wallet-badge" id="navBalance">₹0</a>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="seat-page">
+  <div style="max-width:1200px;margin:0 auto;">
+
+    <div id="busInfoBar" style="margin-bottom:24px;padding:20px;background:white;border-radius:12px;border:1px solid var(--border);"></div>
+
+    <div class="seat-layout">
+      <!-- SEAT MAP -->
+      <div class="seat-map-wrapper">
+        <div class="seat-map-header">
+          <h2 style="font-size:22px;font-weight:800;">Select Your Seats</h2>
+          <div class="seat-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#e8f5e9;border:2px solid #a5d6a7;"></div> Available</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--blue);border:2px solid var(--blue-dark);"></div> Selected</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#ffebee;border:2px solid #ef9a9a;"></div> Booked</div>
+          </div>
+        </div>
+        <div id="seatMapContainer">
+          <div class="spinner"></div>
+        </div>
+      </div>
+
+      <!-- BOOKING SUMMARY -->
+      <div class="booking-summary">
+        <h3>Booking Summary</h3>
+
+        <div class="summary-row">
+          <span style="color:var(--text-muted)">Route</span>
+          <span id="sumRoute" style="font-weight:600;text-align:right;"></span>
+        </div>
+        <div class="summary-row">
+          <span style="color:var(--text-muted)">Date & Time</span>
+          <span id="sumDateTime" style="font-weight:600;font-size:13px;text-align:right;"></span>
+        </div>
+        <div class="summary-row">
+          <span style="color:var(--text-muted)">Selected Seats</span>
+          <span id="sumSeats" style="font-weight:600;color:var(--blue);">None</span>
+        </div>
+        <div class="summary-row">
+          <span style="color:var(--text-muted)">Price/Seat</span>
+          <span id="sumPrice">₹0</span>
+        </div>
+        <div class="summary-row">
+          <span style="font-weight:700;font-size:16px;">Total</span>
+          <span class="summary-total" id="sumTotal">₹0</span>
+        </div>
+
+        <!-- Boarding & Dropping -->
+        <div class="form-group" style="margin-top:16px;">
+          <label>Boarding Point</label>
+          <select id="boardingPoint" style="width:100%;padding:10px;border:2px solid var(--border);border-radius:8px;outline:none;font-family:inherit;">
+            <option value="">Select boarding point</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Dropping Point</label>
+          <select id="droppingPoint" style="width:100%;padding:10px;border:2px solid var(--border);border-radius:8px;outline:none;font-family:inherit;">
+            <option value="">Select dropping point</option>
+          </select>
+        </div>
+
+        <!-- Passenger Details -->
+        <div id="passengerForms"></div>
+
+        <!-- Promo Code -->
+        <div style="margin:16px 0;display:flex;gap:8px;">
+          <input type="text" id="promoInput" placeholder="Promo code" style="flex:1;padding:10px;border:2px solid var(--border);border-radius:8px;outline:none;font-family:inherit;text-transform:uppercase;">
+          <button class="btn btn-outline btn-sm" onclick="applyPromo()">Apply</button>
+        </div>
+        <div id="promoMsg" style="font-size:13px;margin-bottom:8px;"></div>
+
+        <button class="btn btn-primary btn-block btn-lg" id="proceedBtn" onclick="proceedToPayment()" disabled>
+          Proceed to Payment →
+        </button>
+
+        <div style="margin-top:12px;font-size:12px;color:var(--text-muted);text-align:center;">
+          🔒 Secure booking · Instant confirmation
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OTP Modal -->
+<div class="modal-overlay" id="otpModal">
+  <div class="modal">
+    <h2 class="modal-title">Confirm Payment</h2>
+    <p class="modal-sub">Enter the OTP sent to <strong id="otpUserEmail"></strong> to confirm your booking of <strong id="otpAmount"></strong></p>
+    <div class="otp-input-row">
+      <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" id="bd1" oninput="otpNext(this,'bd2')">
+      <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" id="bd2" oninput="otpNext(this,'bd3')">
+      <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" id="bd3" oninput="otpNext(this,'bd4')">
+      <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" id="bd4" oninput="otpNext(this,'bd5')">
+      <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" id="bd5" oninput="otpNext(this,'bd6')">
+      <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" id="bd6" oninput="otpNext(this,null)">
+    </div>
+    <button class="btn btn-primary btn-block btn-lg" id="confirmPayBtn" onclick="confirmPayment()">Confirm &amp; Pay</button>
+    <button class="btn btn-ghost btn-block" style="margin-top:8px;" onclick="closeOtpModal()">Cancel</button>
+    <div style="margin-top:12px;text-align:center;font-size:13px;color:var(--text-muted);">
+      Didn't receive? <a href="#" class="form-link" onclick="resendBookingOtp()">Resend OTP</a>
+    </div>
+  </div>
+</div>
+
+<script src="../js/auth.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const SCHEDULE_ID = params.get('schedule');
+if (!SCHEDULE_ID) window.location.href = 'search.html';
+
+let schedule = null;
+let allSeats = [];
+let selectedSeats = [];
+let promoDiscount = 0;
+let promoCode = '';
+
+async function init() {
+  if (!requireAuth()) return;
+  try {
+    [schedule] = await Promise.all([
+      apiCall(`/operators/schedules/${SCHEDULE_ID}`)
+    ]);
+    allSeats = await apiCall(`/operators/schedules/${SCHEDULE_ID}/seats`);
+    renderBusInfo();
+    renderSeatMap();
+    populateBoardingDropping();
+  } catch (err) {
+    showToast('Failed to load schedule: ' + err.message, 'error');
+  }
+}
+
+function renderBusInfo() {
+  document.getElementById('busInfoBar').innerHTML = `
+    <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;">${schedule.company_name}</div>
+        <div style="color:var(--text-muted);font-size:14px;">${schedule.bus_name} · ${schedule.bus_number} · <span class="tag tag-orange">${schedule.bus_type}</span></div>
+      </div>
+      <div style="display:flex;gap:32px;align-items:center;">
+        <div style="text-align:center;">
+          <div style="font-size:24px;font-weight:800;font-family:'Syne',sans-serif;">${fmtTime(schedule.departure_time)}</div>
+          <div style="font-size:13px;color:var(--text-muted);">${schedule.source_city}</div>
+        </div>
+        <div style="text-align:center;color:var(--text-muted);font-size:13px;">
+          ——→<br>${schedule.duration_minutes ? fmtDuration(schedule.duration_minutes) : ''}
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:24px;font-weight:800;font-family:'Syne',sans-serif;">${fmtTime(schedule.arrival_time)}</div>
+          <div style="font-size:13px;color:var(--text-muted);">${schedule.destination_city}</div>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:28px;font-weight:800;color:var(--blue);font-family:'Syne',sans-serif;">${fmtINR(schedule.price_per_seat)}</div>
+        <div style="font-size:13px;color:var(--success);">${schedule.available_seats} seats available</div>
+      </div>
+    </div>
+  `;
+  document.getElementById('sumRoute').textContent = `${schedule.source_city} → ${schedule.destination_city}`;
+  document.getElementById('sumDateTime').textContent = fmtDateTime(schedule.departure_time);
+  document.getElementById('sumPrice').textContent = fmtINR(schedule.price_per_seat);
+}
+
+function renderSeatMap() {
+  const container = document.getElementById('seatMapContainer');
+  if (!allSeats.length) { container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">No seat data available</p>'; return; }
+
+  // Group by deck then row
+  const lower = allSeats.filter(s => s.deck === 'LOWER');
+  const upper = allSeats.filter(s => s.deck === 'UPPER');
+
+  const renderDeck = (seats, label) => {
+    if (!seats.length) return '';
+    // Extract rows from seat numbers (e.g. "1A" -> row 1)
+    const rows = {};
+    seats.forEach(s => {
+      const row = s.seat_number.match(/^(\d+)/)?.[1] || '1';
+      if (!rows[row]) rows[row] = [];
+      rows[row].push(s);
+    });
+
+    let html = `<div style="margin-bottom:28px;"><div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:12px;">${label} Deck</div>`;
+    html += `<div style="background:var(--bg);border-radius:12px;padding:16px;display:inline-block;min-width:280px;">`;
+    html += `<div class="driver-box" style="margin-bottom:16px;">🚗 Driver</div>`;
+    Object.keys(rows).sort((a,b)=>parseInt(a)-parseInt(b)).forEach(row => {
+      html += `<div class="seat-row" style="margin-bottom:8px;">`;
+      const rowSeats = rows[row].sort((a,b) => a.seat_number.localeCompare(b.seat_number));
+      rowSeats.forEach((seat, i) => {
+        const cls = seat.status === 'BOOKED' ? 'booked' : (selectedSeats.includes(seat.seat_number) ? 'selected' : 'available');
+        const isSlp = seat.seat_type === 'SLEEPER';
+        html += `<div class="seat ${cls} ${isSlp?'sleeper':''}" 
+          id="seat-${seat.seat_number}"
+          onclick="toggleSeat('${seat.seat_number}','${seat.status}')"
+          title="${seat.seat_number}"
+          style="${i===1 && rowSeats.length>=4 ? 'margin-right:20px;' : ''}"
+        >${seat.seat_number}</div>`;
+      });
+      html += `</div>`;
+    });
+    html += `</div></div>`;
+    return html;
+  };
+
+  container.innerHTML = renderDeck(lower, 'Lower') + renderDeck(upper, 'Upper');
+}
+
+function toggleSeat(seatNum, status) {
+  if (status === 'BOOKED') { showToast('This seat is already booked', 'warn'); return; }
+  const idx = selectedSeats.indexOf(seatNum);
+  if (idx === -1) {
+    if (selectedSeats.length >= 6) { showToast('Maximum 6 seats per booking', 'warn'); return; }
+    selectedSeats.push(seatNum);
+    document.getElementById(`seat-${seatNum}`)?.classList.replace('available','selected');
+  } else {
+    selectedSeats.splice(idx, 1);
+    document.getElementById(`seat-${seatNum}`)?.classList.replace('selected','available');
+  }
+  updateSummary();
+  renderPassengerForms();
+}
+
+function updateSummary() {
+  const count = selectedSeats.length;
+  const price = parseFloat(schedule.price_per_seat);
+  const total = price * count;
+  const final = Math.max(0, total - promoDiscount);
+
+  document.getElementById('sumSeats').textContent = count ? selectedSeats.join(', ') : 'None';
+  document.getElementById('sumTotal').textContent = fmtINR(final);
+  document.getElementById('proceedBtn').disabled = count === 0;
+}
+
+function renderPassengerForms() {
+  const container = document.getElementById('passengerForms');
+  if (!selectedSeats.length) { container.innerHTML = ''; return; }
+  let html = `<div style="margin-top:16px;"><h4 style="font-size:15px;font-weight:700;margin-bottom:12px;">Passenger Details</h4>`;
+  selectedSeats.forEach((seat, i) => {
+    html += `
+      <div style="background:var(--bg);border-radius:8px;padding:14px;margin-bottom:10px;">
+        <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px;text-transform:uppercase;">Seat ${seat}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div>
+            <label style="font-size:11px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">NAME *</label>
+            <input type="text" id="pname_${i}" placeholder="Full name" style="width:100%;padding:8px;border:2px solid var(--border);border-radius:6px;font-family:inherit;font-size:13px;outline:none;">
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">AGE</label>
+            <input type="number" id="page_${i}" placeholder="Age" min="1" max="120" style="width:100%;padding:8px;border:2px solid var(--border);border-radius:6px;font-family:inherit;font-size:13px;outline:none;">
+          </div>
+        </div>
+        <div style="margin-top:8px;">
+          <label style="font-size:11px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">GENDER</label>
+          <select id="pgender_${i}" style="width:100%;padding:8px;border:2px solid var(--border);border-radius:6px;font-family:inherit;font-size:13px;outline:none;">
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>`;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function populateBoardingDropping() {
+  const bp = document.getElementById('boardingPoint');
+  const dp = document.getElementById('droppingPoint');
+  try {
+    const boarding = Array.isArray(schedule.boarding_points) ? schedule.boarding_points : JSON.parse(schedule.boarding_points || '[]');
+    const dropping = Array.isArray(schedule.dropping_points) ? schedule.dropping_points : JSON.parse(schedule.dropping_points || '[]');
+    boarding.forEach(p => { const o = document.createElement('option'); o.value = p; o.textContent = p; bp.appendChild(o); });
+    dropping.forEach(p => { const o = document.createElement('option'); o.value = p; o.textContent = p; dp.appendChild(o); });
+    if (!boarding.length) { const o = document.createElement('option'); o.value = schedule.source_city; o.textContent = schedule.source_city; bp.appendChild(o); }
+    if (!dropping.length) { const o = document.createElement('option'); o.value = schedule.destination_city; o.textContent = schedule.destination_city; dp.appendChild(o); }
+  } catch(e) {}
+}
+
+async function applyPromo() {
+  const code = document.getElementById('promoInput').value.trim().toUpperCase();
+  if (!code) { showToast('Enter a promo code', 'warn'); return; }
+  const price = parseFloat(schedule.price_per_seat) * selectedSeats.length;
+  try {
+    const data = await apiCall('/promos/validate', { method: 'POST', body: { code, booking_amount: price } });
+    promoDiscount = data.discount;
+    promoCode = code;
+    document.getElementById('promoMsg').innerHTML = `<span style="color:var(--success);font-weight:600;">✅ ${code} applied! You save ${fmtINR(promoDiscount)}</span>`;
+    updateSummary();
+  } catch (err) {
+    document.getElementById('promoMsg').innerHTML = `<span style="color:var(--error);">❌ ${err.message}</span>`;
+    promoDiscount = 0; promoCode = '';
+    updateSummary();
+  }
+}
+
+function otpNext(el, nextId) {
+  if (el.value.length === 1 && nextId) document.getElementById(nextId)?.focus();
+}
+
+async function proceedToPayment() {
+  if (!selectedSeats.length) { showToast('Please select at least one seat', 'error'); return; }
+  const passengers = [];
+  for (let i = 0; i < selectedSeats.length; i++) {
+    const name = document.getElementById(`pname_${i}`)?.value?.trim();
+    if (!name) { showToast(`Please enter name for seat ${selectedSeats[i]}`, 'error'); return; }
+    passengers.push({ name, age: document.getElementById(`page_${i}`)?.value || null, gender: document.getElementById(`pgender_${i}`)?.value || null });
+  }
+
+  // Initiate booking (lock seats)
+  try {
+    await apiCall('/bookings/initiate', { method: 'POST', body: { schedule_id: SCHEDULE_ID, seat_numbers: selectedSeats, boarding_point: document.getElementById('boardingPoint').value, dropping_point: document.getElementById('droppingPoint').value } });
+  } catch (err) { showToast(err.message, 'error'); return; }
+
+  // Send booking OTP
+  const user = getUser();
+  try {
+    await apiCall('/auth/booking-otp', { method: 'POST', body: { email: user.email } });
+  } catch(e) {}
+
+  document.getElementById('otpUserEmail').textContent = user.email;
+  const final = Math.max(0, parseFloat(schedule.price_per_seat) * selectedSeats.length - promoDiscount);
+  document.getElementById('otpAmount').textContent = fmtINR(final);
+  document.getElementById('otpModal').classList.add('active');
+  document.getElementById('bd1').focus();
+}
+
+async function confirmPayment() {
+  const otp = ['bd1','bd2','bd3','bd4','bd5','bd6'].map(id => document.getElementById(id).value).join('');
+  if (otp.length !== 6) { showToast('Enter 6-digit OTP', 'error'); return; }
+
+  const btn = document.getElementById('confirmPayBtn');
+  btn.disabled = true; btn.textContent = 'Processing...';
+
+  const user = getUser();
+  try {
+    await apiCall('/auth/verify-booking-otp', { method: 'POST', body: { email: user.email, otp } });
+  } catch (err) { showToast('Invalid OTP', 'error'); btn.disabled = false; btn.textContent = 'Confirm & Pay'; return; }
+
+  const passengers = [];
+  for (let i = 0; i < selectedSeats.length; i++) {
+    passengers.push({ name: document.getElementById(`pname_${i}`)?.value?.trim(), age: document.getElementById(`page_${i}`)?.value, gender: document.getElementById(`pgender_${i}`)?.value });
+  }
+
+  try {
+    const booking = await apiCall('/bookings/confirm', { method: 'POST', body: {
+      schedule_id: SCHEDULE_ID,
+      seat_numbers: selectedSeats,
+      passenger_details: passengers,
+      boarding_point: document.getElementById('boardingPoint').value,
+      dropping_point: document.getElementById('droppingPoint').value,
+      promo_code: promoCode || undefined
+    }});
+    showToast('🎉 Booking confirmed! Redirecting...', 'success');
+    setTimeout(() => window.location.href = `booking-detail.html?id=${booking.id}`, 1500);
+  } catch (err) {
+    showToast(err.message, 'error');
+    btn.disabled = false; btn.textContent = 'Confirm & Pay';
+  }
+}
+
+async function resendBookingOtp() {
+  const user = getUser();
+  try { await apiCall('/auth/booking-otp', { method: 'POST', body: { email: user.email } }); showToast('OTP resent!', 'success'); } catch(e) {}
+}
+
+function closeOtpModal() { document.getElementById('otpModal').classList.remove('active'); }
+
+init();
+</script>
+</body>
+</html>

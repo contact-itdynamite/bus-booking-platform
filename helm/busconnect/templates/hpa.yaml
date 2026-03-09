@@ -1,0 +1,27 @@
+{{- if .Values.hpa.enabled }}
+{{- $services := list "booking-service" "api-gateway" "auth-service" "user-service" }}
+{{- range $services }}
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ . }}-hpa
+  namespace: {{ include "busconnect.namespace" $ }}
+  labels:
+    {{- include "busconnect.labels" $ | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ . }}
+  minReplicas: {{ $.Values.hpa.minReplicas }}
+  maxReplicas: {{ $.Values.hpa.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ $.Values.hpa.cpuTargetUtilization }}
+{{- end }}
+{{- end }}

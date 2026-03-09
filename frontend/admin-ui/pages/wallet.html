@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet – Admin</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-logo">🚌 Bus<span>Connect</span> <small style="font-size:10px;opacity:0.6;display:block;font-weight:400;">ADMIN</small></div>
+  <nav class="sidebar-nav">
+    <a href="dashboard.html"><span class="icon">📊</span><span>Dashboard</span></a>
+    <a href="users.html"><span class="icon">👥</span><span>Users</span></a>
+    <a href="operators.html"><span class="icon">🚌</span><span>Operators</span></a>
+    <a href="bookings.html"><span class="icon">🎫</span><span>Bookings</span></a>
+    <a href="promos.html"><span class="icon">🎁</span><span>Promo Codes</span></a>
+    <a href="reports.html"><span class="icon">📈</span><span>Reports</span></a>
+    <a href="logs.html"><span class="icon">📋</span><span>System Logs</span></a>
+    <a href="wallet.html" class="active"><span class="icon">💎</span><span>Wallet</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px;">Logged in as<br><strong style="color:white;" id="adminName">Admin</strong></div>
+    <button class="btn btn-ghost btn-sm" onclick="logout()" style="width:100%;color:white;border-color:rgba(255,255,255,0.2);">Logout</button>
+  </div>
+</aside>
+<main class="main-content">
+  <h1 class="page-title">Wallet Overview</h1>
+  <p class="page-subtitle">Platform-wide wallet balances and admin transactions</p>
+
+  <!-- Admin wallet -->
+  <div class="wallet-mega" style="margin-bottom:24px;">
+    <div style="font-size:11px;letter-spacing:1px;opacity:0.7;text-transform:uppercase;margin-bottom:6px;">Admin Wallet Balance</div>
+    <div style="font-family:'Syne',sans-serif;font-size:42px;font-weight:800;" id="adminBal">₹—</div>
+    <div style="margin-top:8px;font-size:13px;opacity:0.7;">Initial: ₹10 Crore + Commissions earned (10% of every booking)</div>
+  </div>
+
+  <!-- Summary cards -->
+  <div class="stats-grid" id="walletSummary" style="margin-bottom:24px;"></div>
+
+  <!-- Admin transactions -->
+  <div class="card">
+    <h3 class="card-title">Admin Transaction History</h3>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>Date</th><th>Description</th><th>Type</th><th>Amount</th><th>Balance After</th></tr></thead>
+        <tbody id="txBody"><tr><td colspan="5" style="text-align:center;padding:32px;color:#6b7280;">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- All wallets -->
+  <div class="card">
+    <h3 class="card-title">All Platform Wallets</h3>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>Owner</th><th>Type</th><th>Balance</th></tr></thead>
+        <tbody id="allWalletBody"><tr><td colspan="3" style="text-align:center;padding:32px;color:#6b7280;">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script src="../js/app.js"></script>
+<script>
+async function init() {
+  if (!requireAuth()) return;
+  try {
+    const [wallet, txData, allWallets, overview] = await Promise.all([
+      apiCall('/wallet/balance'),
+      apiCall('/wallet/transactions?limit=30'),
+      apiCall('/wallet/all'),
+      apiCall('/admin/wallet-overview')
+    ]);
+
+    document.getElementById('adminBal').textContent = fmtINR(wallet.balance);
+
+    // Summary from overview
+    const om = { USER:'👥 Users', OPERATOR:'🚌 Operators', ADMIN:'💎 Admin' };
+    document.getElementById('walletSummary').innerHTML = (overview||[]).map(o=>`
+      <div class="stat-card">
+        <div class="stat-icon">${om[o.owner_type]?.split(' ')[0]||'💰'}</div>
+        <div class="stat-value">${fmtINR(o.total_balance)}</div>
+        <div class="stat-label">${om[o.owner_type]||o.owner_type} (${o.wallet_count} wallets)</div>
+        <div class="bar"></div>
+      </div>`).join('');
+
+    const txs = txData.transactions || [];
+    document.getElementById('txBody').innerHTML = txs.length ? txs.map(t=>`
+      <tr>
+        <td style="font-size:11px;">${fmtDateTime(t.created_at)}</td>
+        <td style="font-size:12px;">${t.description||t.reference_type||'—'}</td>
+        <td><span class="badge ${t.type==='CREDIT'?'badge-green':'badge-red'}">${t.type}</span></td>
+        <td style="font-weight:700;color:${t.type==='CREDIT'?'#059669':'#dc2626'};">${t.type==='CREDIT'?'+':'−'}${fmtINR(t.amount)}</td>
+        <td><strong>${fmtINR(t.balance_after)}</strong></td>
+      </tr>`).join('') : '<tr><td colspan="5" style="text-align:center;padding:24px;color:#6b7280;">No transactions</td></tr>';
+
+    const typeColors = { USER:'badge-blue', OPERATOR:'badge-green', ADMIN:'badge-purple' };
+    document.getElementById('allWalletBody').innerHTML = (allWallets||[]).map(w=>`
+      <tr>
+        <td><strong>${w.owner_name||'—'}</strong></td>
+        <td><span class="badge ${typeColors[w.owner_type]||'badge-gray'}">${w.owner_type}</span></td>
+        <td><strong style="font-size:15px;">${fmtINR(w.balance)}</strong></td>
+      </tr>`).join('') || '<tr><td colspan="3" style="text-align:center;padding:24px;color:#6b7280;">No wallets</td></tr>';
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+}
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promo Codes – Admin</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-logo">🚌 Bus<span>Connect</span> <small style="font-size:10px;opacity:0.6;display:block;font-weight:400;">ADMIN</small></div>
+  <nav class="sidebar-nav">
+    <a href="dashboard.html"><span class="icon">📊</span><span>Dashboard</span></a>
+    <a href="users.html"><span class="icon">👥</span><span>Users</span></a>
+    <a href="operators.html"><span class="icon">🚌</span><span>Operators</span></a>
+    <a href="bookings.html"><span class="icon">🎫</span><span>Bookings</span></a>
+    <a href="promos.html" class="active"><span class="icon">🎁</span><span>Promo Codes</span></a>
+    <a href="reports.html"><span class="icon">📈</span><span>Reports</span></a>
+    <a href="logs.html"><span class="icon">📋</span><span>System Logs</span></a>
+    <a href="wallet.html"><span class="icon">💎</span><span>Wallet</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px;">Logged in as<br><strong style="color:white;" id="adminName">Admin</strong></div>
+    <button class="btn btn-ghost btn-sm" onclick="logout()" style="width:100%;color:white;border-color:rgba(255,255,255,0.2);">Logout</button>
+  </div>
+</aside>
+<main class="main-content">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+    <div><h1 class="page-title">Promo Codes</h1><p class="page-subtitle">Manage discounts and promotional offers</p></div>
+    <button class="btn btn-accent" onclick="document.getElementById('promoModal').classList.add('active')">+ Create Promo</button>
+  </div>
+  <div class="card">
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>Code</th><th>Type</th><th>Discount</th><th>Usage</th><th>Valid Until</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="tbody"><tr><td colspan="7" style="text-align:center;padding:32px;color:#6b7280;">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<div class="modal-overlay" id="promoModal">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('promoModal').classList.remove('active')">×</button>
+    <h2 class="modal-title">Create Promo Code</h2>
+    <div id="promoAlert" class="alert alert-error" style="display:none;"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Code *</label><input type="text" id="pCode" placeholder="SAVE50" style="text-transform:uppercase;"></div>
+      <div class="form-group">
+        <label>Type *</label>
+        <select id="pType">
+          <option value="GLOBAL">Global (all users)</option>
+          <option value="USER_SPECIFIC">User Specific</option>
+        </select>
+      </div>
+    </div>
+    <div id="userIdRow" style="display:none;" class="form-group"><label>User Email (for user-specific)</label><input type="text" id="pUserId" placeholder="user@email.com"></div>
+    <div class="form-group"><label>Description</label><input type="text" id="pDesc" placeholder="Get ₹50 off on your next booking"></div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Discount Type *</label>
+        <select id="pDiscType">
+          <option value="FLAT">Flat Amount (₹)</option>
+          <option value="PERCENTAGE">Percentage (%)</option>
+          <option value="CREDITS">Credits</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Discount Value *</label><input type="number" id="pDiscVal" placeholder="50" min="1"></div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>Max Discount (₹)</label><input type="number" id="pMaxDisc" placeholder="Optional"></div>
+      <div class="form-group"><label>Min Booking (₹)</label><input type="number" id="pMinBook" placeholder="0"></div>
+    </div>
+    <div class="form-group"><label>Usage Limit</label><input type="number" id="pUseLim" placeholder="Unlimited"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Valid From *</label><input type="datetime-local" id="pFrom"></div>
+      <div class="form-group"><label>Valid Until *</label><input type="datetime-local" id="pUntil"></div>
+    </div>
+    <button class="btn btn-accent btn-block" onclick="createPromo()">Create Promo Code</button>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+document.getElementById('pType').onchange = function() {
+  document.getElementById('userIdRow').style.display = this.value==='USER_SPECIFIC'?'':'none';
+};
+
+// Set default dates
+const now = new Date(); const later = new Date(now.getTime() + 30*24*60*60*1000);
+document.getElementById('pFrom').value = now.toISOString().slice(0,16);
+document.getElementById('pUntil').value = later.toISOString().slice(0,16);
+
+async function loadPromos() {
+  if (!requireAuth()) return;
+  try {
+    const promos = await apiCall('/promos');
+    const dm = { GLOBAL:'badge-blue', USER_SPECIFIC:'badge-purple' };
+    document.getElementById('tbody').innerHTML = promos.length ? promos.map(p=>`
+      <tr>
+        <td>
+          <div style="font-family:monospace;font-size:15px;font-weight:700;color:#1A56DB;">${p.code}</div>
+          <div style="font-size:12px;color:#6b7280;">${p.description||'—'}</div>
+        </td>
+        <td><span class="badge ${dm[p.type]||'badge-gray'}">${p.type.replace('_',' ')}</span></td>
+        <td>
+          <strong>${p.discount_type==='FLAT'?`₹${p.discount_value}`:p.discount_type==='PERCENTAGE'?`${p.discount_value}%`:`₹${p.discount_value} credits`}</strong>
+          ${p.max_discount?`<div style="font-size:11px;color:#6b7280;">max ₹${p.max_discount}</div>`:''}
+        </td>
+        <td>${p.used_count}${p.usage_limit?` / ${p.usage_limit}`:' / ∞'}</td>
+        <td style="font-size:12px;">${fmtDate(p.valid_until)}</td>
+        <td><span class="badge ${p.is_active?'badge-green':'badge-red'}">${p.is_active?'Active':'Inactive'}</span></td>
+        <td style="display:flex;gap:4px;">
+          <button class="btn btn-sm ${p.is_active?'btn-warn':'btn-success'}" onclick="togglePromo('${p.id}')">${p.is_active?'Deactivate':'Activate'}</button>
+          <button class="btn btn-danger btn-sm" onclick="deletePromo('${p.id}')">Delete</button>
+        </td>
+      </tr>`).join(''):`<tr><td colspan="7" style="text-align:center;padding:40px;color:#6b7280;"><div style="font-size:40px;margin-bottom:12px;">🎁</div>No promo codes yet</td></tr>`;
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+}
+
+async function createPromo() {
+  const alertEl=document.getElementById('promoAlert');
+  const payload={
+    code:document.getElementById('pCode').value.trim().toUpperCase(),
+    type:document.getElementById('pType').value,
+    description:document.getElementById('pDesc').value,
+    discount_type:document.getElementById('pDiscType').value,
+    discount_value:parseFloat(document.getElementById('pDiscVal').value),
+    max_discount:document.getElementById('pMaxDisc').value||null,
+    min_booking_amount:document.getElementById('pMinBook').value||0,
+    usage_limit:document.getElementById('pUseLim').value||null,
+    valid_from:document.getElementById('pFrom').value,
+    valid_until:document.getElementById('pUntil').value
+  };
+  if(!payload.code||!payload.discount_value||!payload.valid_from||!payload.valid_until){alertEl.textContent='Fill required fields';alertEl.style.display='';return;}
+  alertEl.style.display='none';
+  try {
+    await apiCall('/promos',{method:'POST',body:payload});
+    showToast('Promo created!','success');
+    document.getElementById('promoModal').classList.remove('active');
+    loadPromos();
+  } catch(e){alertEl.textContent=e.message;alertEl.style.display='';}
+}
+
+async function togglePromo(id) {
+  try { await apiCall(`/promos/${id}/toggle`,{method:'PATCH'}); loadPromos(); } catch(e){showToast(e.message,'error');}
+}
+async function deletePromo(id) {
+  if(!confirm('Delete this promo?'))return;
+  try { await apiCall(`/promos/${id}`,{method:'DELETE'}); showToast('Deleted','success'); loadPromos(); } catch(e){showToast(e.message,'error');}
+}
+
+loadPromos();
+</script>
+</body>
+</html>

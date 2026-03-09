@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login – BusConnect</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',sans-serif;background:#111827;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@800&family=DM+Sans:wght@400;500;700&display=swap');
+    .card{background:white;border-radius:20px;padding:48px;width:100%;max-width:420px;box-shadow:0 24px 64px rgba(0,0,0,0.4);}
+    .logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;text-align:center;margin-bottom:4px;}
+    .logo span{color:#1A56DB;}
+    .badge{display:inline-block;background:#EBF2FF;color:#1342B8;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;margin:0 auto 20px;display:block;text-align:center;width:fit-content;margin:0 auto 24px;}
+    h1{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;text-align:center;margin-bottom:4px;}
+    p{color:#6b7280;text-align:center;font-size:14px;margin-bottom:28px;}
+    label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#6b7280;margin-bottom:5px;}
+    input{width:100%;padding:12px 14px;border:2px solid #e5e7eb;border-radius:8px;font-family:inherit;font-size:14px;outline:none;transition:border-color 0.2s;margin-bottom:16px;}
+    input:focus{border-color:#1A56DB;}
+    .btn{width:100%;padding:13px;background:#111827;color:white;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background 0.2s;}
+    .btn:hover{background:#1f2937;}
+    .btn:disabled{opacity:0.5;cursor:not-allowed;}
+    .alert{background:#EBF2FF;color:#1342B8;border:1px solid #BFDBFE;border-radius:8px;padding:11px 14px;font-size:13px;margin-bottom:14px;}
+    .hint{text-align:center;margin-top:16px;font-size:13px;color:#9ca3af;}
+    .hint code{background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:12px;}
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">🚌 Bus<span>Connect</span></div>
+  <div class="badge">ADMIN PORTAL</div>
+  <h1>Admin Login</h1>
+  <p>Secure access for platform administrators</p>
+  <div id="errAlert" class="alert" style="display:none;"></div>
+  <label>Email Address</label>
+  <input type="email" id="email" placeholder="admin@busconnect.com" autocomplete="email">
+  <label>Password</label>
+  <div style="position:relative;">
+    <input type="password" id="password" placeholder="Admin password" onkeypress="if(event.key==='Enter')doLogin()" style="padding-right:44px;">
+    <button type="button" onclick="togglePwd()" id="pwdToggle" style="position:absolute;right:12px;top:calc(50% - 8px);transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;line-height:1;">👁️</button>
+  </div>
+  <button class="btn" id="loginBtn" onclick="doLogin()" style="margin-top:16px;">Access Admin Dashboard</button>
+  <div class="hint">Default: <code>admin@busconnect.com</code> / <code>admin123</code></div>
+</div>
+<script src="js/auth.js"></script>
+<script>
+function togglePwd() {
+  const inp = document.getElementById('password');
+  const btn = document.getElementById('pwdToggle');
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁️'; }
+}
+async function doLogin() {
+  const email=document.getElementById('email').value.trim();
+  const password=document.getElementById('password').value;
+  const err=document.getElementById('errAlert'); const btn=document.getElementById('loginBtn');
+  if(!email||!password){err.textContent='Fill all fields';err.style.display='';return;}
+  err.style.display='none'; btn.disabled=true; btn.textContent='Signing in...';
+  try {
+    const d = await apiCall('/auth/admin/login',{method:'POST',body:{email,password}});
+    setAuth(d.token,d.admin);
+    window.location.href='pages/dashboard.html';
+  } catch(e){err.textContent=e.message;err.style.display='';btn.disabled=false;btn.textContent='Access Admin Dashboard';}
+}
+</script>
+</body>
+</html>

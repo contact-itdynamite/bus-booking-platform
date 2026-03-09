@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookings – Operator Portal</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-logo">🚌 Bus<span>Connect</span></div>
+  <nav class="sidebar-nav">
+    <a href="dashboard.html"><span class="icon">📊</span><span>Dashboard</span></a>
+    <a href="buses.html"><span class="icon">🚌</span><span>My Buses</span></a>
+    <a href="routes.html"><span class="icon">🗺️</span><span>Routes</span></a>
+    <a href="schedules.html"><span class="icon">📅</span><span>Schedules</span></a>
+    <a href="bookings.html" class="active"><span class="icon">🎫</span><span>Bookings</span></a>
+    <a href="wallet.html"><span class="icon">💰</span><span>Wallet</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user" id="sidebarUser"><strong>Operator</strong></div>
+    <button class="btn btn-ghost btn-sm" onclick="logout()" style="width:100%;">Logout</button>
+  </div>
+</aside>
+<main class="main-content">
+  <h1 class="page-title">Bookings</h1>
+  <p class="page-subtitle">All passenger bookings</p>
+
+  <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+    <button class="btn btn-accent btn-sm" onclick="load(1,'')">All</button>
+    <button class="btn btn-ghost btn-sm" onclick="load(1,'CONFIRMED')">Confirmed</button>
+    <button class="btn btn-ghost btn-sm" onclick="load(1,'PENDING')">Pending</button>
+    <button class="btn btn-ghost btn-sm" onclick="load(1,'CANCELLED')">Cancelled</button>
+  </div>
+
+  <div class="card">
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>Reference</th><th>Passenger</th><th>Route</th><th>Departure</th><th>Seats</th><th>Amount</th><th>Status</th></tr></thead>
+        <tbody id="tbody"><tr><td colspan="7" style="text-align:center;padding:32px;">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<script src="../js/app.js"></script>
+<script>
+async function load(page=1, status='') {
+  if (!requireAuth()) return;
+  try {
+    let url = `/bookings/operator/all?page=${page}&limit=20`;
+    if (status) url += `&status=${status}`;
+    const data = await apiCall(url);
+    const bm = { CONFIRMED:'badge-green', PENDING:'badge-orange', CANCELLED:'badge-red', COMPLETED:'badge-blue' };
+    document.getElementById('tbody').innerHTML = data.length ? data.map(b=>`
+      <tr>
+        <td><strong style="color:#2557a7;">${b.booking_reference}</strong></td>
+        <td>${b.user_name}<br><small style="color:#64748b;">${b.user_email}</small></td>
+        <td style="font-size:13px;">${b.source_city} → ${b.destination_city}</td>
+        <td style="font-size:13px;">${fmtDateTime(b.departure_time)}</td>
+        <td>${JSON.parse(b.seats_booked||'[]').join(', ')}</td>
+        <td><strong>${fmtINR(b.final_amount)}</strong></td>
+        <td><span class="badge ${bm[b.status]||'badge-gray'}">${b.status}</span></td>
+      </tr>`).join('') : '<tr><td colspan="7" style="text-align:center;padding:32px;color:#64748b;">No bookings found</td></tr>';
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+}
+load();
+</script>
+</body>
+</html>

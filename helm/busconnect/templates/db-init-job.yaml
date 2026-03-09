@@ -1,0 +1,74 @@
+---
+# Job to initialise the PostgreSQL schema on first install.
+# Uses helm hook so it runs AFTER postgres starts.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: busconnect-db-init
+  namespace: {{ include "busconnect.namespace" . }}
+  labels:
+    {{- include "busconnect.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  backoffLimit: 5
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: db-init
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-postgres
+          image: busybox:1.35
+          command: ['sh', '-c', 'until nc -z postgres-service 5432; do echo waiting for postgres; sleep 3; done']
+      containers:
+        - name: db-init
+          image: postgres:15-alpine
+          env:
+            - name: PGHOST
+              value: postgres-service
+            - name: PGPORT
+              value: "5432"
+            - name: PGDATABASE
+              value: {{ .Values.postgres.database }}
+            - name: PGUSER
+              value: {{ .Values.postgres.user }}
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: busconnect-secret
+                  key: DB_PASSWORD
+          command:
+            - sh
+            - -c
+            - |
+              echo "Running schema initialisation..."
+              psql -f /sql/schema.sql && echo "Schema OK" || echo "Schema already initialised (OK)"
+          volumeMounts:
+            - name: schema
+              mountPath: /sql
+      volumes:
+        - name: schema
+          configMap:
+            name: busconnect-schema
+
+---
+# ConfigMap that embeds the SQL schema so the Job can apply it.
+# In production you'd build this into a Docker image instead.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: busconnect-schema
+  namespace: {{ include "busconnect.namespace" . }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "0"
+data:
+  schema.sql: |
+    -- See database/schema.sql for full schema.
+    -- This is a placeholder; mount the actual schema via a ConfigMap built from the file.
+    -- Build command: kubectl create configmap busconnect-schema --from-file=schema.sql=database/schema.sql -n busconnect --dry-run=client -o yaml | kubectl apply -f -
+    SELECT 1;

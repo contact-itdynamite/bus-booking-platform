@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Detail – BusConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo">🚌 BusConnect</a>
+    <div class="nav-auth">
+      <div id="userNav" style="display:none;align-items:center;gap:10px;">
+        <a href="../pages/wallet.html" class="wallet-badge" id="navBalance">₹0</a>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="page-content">
+  <div style="max-width:800px;margin:0 auto;">
+    <div style="display:flex;gap:16px;align-items:center;margin-bottom:24px;">
+      <a href="bookings.html" class="btn btn-ghost btn-sm">← My Bookings</a>
+      <h1 style="font-size:28px;font-weight:800;">Booking Detail</h1>
+    </div>
+    <div id="content"><div class="spinner"></div></div>
+  </div>
+</div>
+
+<!-- Rating Modal -->
+<div class="modal-overlay" id="ratingModal">
+  <div class="modal">
+    <h2 class="modal-title">Rate Your Journey</h2>
+    <p class="modal-sub">How was your experience?</p>
+    <div id="starRow" style="display:flex;gap:8px;justify-content:center;margin:20px 0;">
+      <span class="star-btn" data-val="1" onclick="setRating(1)" style="font-size:40px;cursor:pointer;transition:transform 0.1s;">☆</span>
+      <span class="star-btn" data-val="2" onclick="setRating(2)" style="font-size:40px;cursor:pointer;">☆</span>
+      <span class="star-btn" data-val="3" onclick="setRating(3)" style="font-size:40px;cursor:pointer;">☆</span>
+      <span class="star-btn" data-val="4" onclick="setRating(4)" style="font-size:40px;cursor:pointer;">☆</span>
+      <span class="star-btn" data-val="5" onclick="setRating(5)" style="font-size:40px;cursor:pointer;">☆</span>
+    </div>
+    <div class="form-group">
+      <label>Review (Optional)</label>
+      <textarea id="reviewText" rows="3" placeholder="Tell us about your experience..." style="width:100%;padding:12px;border:2px solid var(--border);border-radius:8px;font-family:inherit;outline:none;resize:vertical;"></textarea>
+    </div>
+    <button class="btn btn-primary btn-block btn-lg" onclick="submitRating()">Submit Rating</button>
+    <button class="btn btn-ghost btn-block" style="margin-top:8px;" onclick="document.getElementById('ratingModal').classList.remove('active')">Cancel</button>
+  </div>
+</div>
+
+<script src="../js/auth.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const BOOKING_ID = params.get('id');
+if (!BOOKING_ID) window.location.href = 'bookings.html';
+
+let currentBooking = null;
+let selectedRating = 0;
+
+async function init() {
+  if (!requireAuth()) return;
+  try {
+    const b = await apiCall(`/bookings/${BOOKING_ID}`);
+    currentBooking = b;
+    renderBooking(b);
+  } catch (err) { document.getElementById('content').innerHTML = `<div class="empty-state"><div class="empty-icon">😕</div><h3>Booking not found</h3></div>`; }
+}
+
+function renderBooking(b) {
+  const statusColors = { CONFIRMED:'tag-green', PENDING:'tag-orange', CANCELLED:'tag-red', COMPLETED:'tag-blue' };
+  const pastJourney = new Date(b.departure_time) < new Date();
+  document.getElementById('content').innerHTML = `
+    <div class="card" style="margin-bottom:20px;background:linear-gradient(135deg,#fff8f8,white);">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;">
+        <div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">Booking Reference</div>
+          <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--blue);">${b.booking_reference}</div>
+        </div>
+        <span class="tag ${statusColors[b.status]||'tag-orange'}" style="font-size:14px;padding:6px 16px;">${b.status}</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <h3 class="card-title">Journey Details</h3>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin-bottom:20px;">
+        <div>
+          <div style="font-size:32px;font-weight:800;font-family:'Syne',sans-serif;">${fmtTime(b.departure_time)}</div>
+          <div style="font-size:16px;font-weight:600;">${b.source_city}</div>
+          <div style="font-size:13px;color:var(--text-muted);">${fmtDate(b.departure_time)}</div>
+        </div>
+        <div style="text-align:center;color:var(--text-muted);font-size:24px;">→</div>
+        <div style="text-align:right;">
+          <div style="font-size:32px;font-weight:800;font-family:'Syne',sans-serif;">${fmtTime(b.arrival_time)}</div>
+          <div style="font-size:16px;font-weight:600;">${b.destination_city}</div>
+          <div style="font-size:13px;color:var(--text-muted);">${fmtDate(b.arrival_time)}</div>
+        </div>
+      </div>
+      <hr class="divider">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div><div style="font-size:12px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Operator</div><div style="font-weight:600;">${b.operator_name}</div></div>
+        <div><div style="font-size:12px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Bus</div><div style="font-weight:600;">${b.bus_name} · ${b.bus_number}</div></div>
+        <div><div style="font-size:12px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Seats</div><div style="font-weight:600;">${JSON.parse(b.seats_booked||'[]').join(', ')}</div></div>
+        <div><div style="font-size:12px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Bus Type</div><div style="font-weight:600;">${b.bus_type}</div></div>
+        ${b.boarding_point ? `<div><div style="font-size:12px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Boarding</div><div style="font-weight:600;">${b.boarding_point}</div></div>` : ''}
+        ${b.dropping_point ? `<div><div style="font-size:12px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Dropping</div><div style="font-weight:600;">${b.dropping_point}</div></div>` : ''}
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <h3 class="card-title">Passengers</h3>
+      <table class="data-table">
+        <thead><tr><th>Seat</th><th>Name</th><th>Age</th><th>Gender</th><th>Ticket</th></tr></thead>
+        <tbody>
+          ${(b.tickets||[]).map(t=>`<tr>
+            <td><strong>${t.seat_number}</strong></td>
+            <td>${t.passenger_name}</td>
+            <td>${t.passenger_age||'—'}</td>
+            <td>${t.passenger_gender||'—'}</td>
+            <td><span class="tag tag-green" style="font-size:11px;">${t.ticket_number}</span></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <h3 class="card-title">Payment Summary</h3>
+      <div class="summary-row"><span style="color:var(--text-muted)">Subtotal</span><span>${fmtINR(b.total_amount)}</span></div>
+      ${parseFloat(b.promo_discount)>0 ? `<div class="summary-row"><span style="color:var(--success)">Promo Discount (${b.promo_code})</span><span style="color:var(--success)">−${fmtINR(b.promo_discount)}</span></div>` : ''}
+      <div class="summary-row"><span style="font-weight:700;font-size:16px;">Total Paid</span><span style="font-size:20px;font-weight:800;color:var(--blue);">${fmtINR(b.final_amount)}</span></div>
+      <div style="margin-top:12px;"><span class="tag ${b.payment_status==='PAID'?'tag-green':b.payment_status==='REFUNDED'?'tag-blue':'tag-orange'}">${b.payment_status}</span></div>
+    </div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      ${b.status==='CONFIRMED' && !pastJourney ? `<button class="btn btn-outline" onclick="cancelBooking('${b.id}')">Cancel Booking</button>` : ''}
+      ${b.status==='CONFIRMED' && pastJourney ? `<button class="btn btn-primary" onclick="document.getElementById('ratingModal').classList.add('active')">⭐ Rate Journey</button>` : ''}
+      <a href="bookings.html" class="btn btn-ghost">← Back to Bookings</a>
+    </div>
+  `;
+}
+
+async function cancelBooking(id) {
+  if (!confirm('Are you sure you want to cancel this booking? Refund will be processed.')) return;
+  try {
+    await apiCall(`/bookings/${id}/cancel`, { method: 'POST', body: { reason: 'User requested cancellation' } });
+    showToast('Booking cancelled. Refund processed!', 'success');
+    setTimeout(() => init(), 1000);
+  } catch (err) { showToast(err.message, 'error'); }
+}
+
+function setRating(val) {
+  selectedRating = val;
+  document.querySelectorAll('.star-btn').forEach((el, i) => {
+    el.textContent = i < val ? '★' : '☆';
+    el.style.color = i < val ? '#fbc02d' : '#ccc';
+  });
+}
+
+async function submitRating() {
+  if (!selectedRating) { showToast('Please select a rating', 'warn'); return; }
+  try {
+    await apiCall(`/bookings/${BOOKING_ID}/rate`, { method: 'POST', body: { rating: selectedRating, review: document.getElementById('reviewText').value } });
+    showToast('Thanks for your rating!', 'success');
+    document.getElementById('ratingModal').classList.remove('active');
+  } catch (err) { showToast(err.message, 'error'); }
+}
+
+init();
+</script>
+</body>
+</html>

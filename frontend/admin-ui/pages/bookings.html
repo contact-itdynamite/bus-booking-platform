@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookings – Admin</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-logo">🚌 Bus<span>Connect</span> <small style="font-size:10px;opacity:0.6;display:block;font-weight:400;">ADMIN</small></div>
+  <nav class="sidebar-nav">
+    <a href="dashboard.html"><span class="icon">📊</span><span>Dashboard</span></a>
+    <a href="users.html"><span class="icon">👥</span><span>Users</span></a>
+    <a href="operators.html"><span class="icon">🚌</span><span>Operators</span></a>
+    <a href="bookings.html" class="active"><span class="icon">🎫</span><span>Bookings</span></a>
+    <a href="promos.html"><span class="icon">🎁</span><span>Promo Codes</span></a>
+    <a href="reports.html"><span class="icon">📈</span><span>Reports</span></a>
+    <a href="logs.html"><span class="icon">📋</span><span>System Logs</span></a>
+    <a href="wallet.html"><span class="icon">💎</span><span>Wallet</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px;">Logged in as<br><strong style="color:white;" id="adminName">Admin</strong></div>
+    <button class="btn btn-ghost btn-sm" onclick="logout()" style="width:100%;color:white;border-color:rgba(255,255,255,0.2);">Logout</button>
+  </div>
+</aside>
+<main class="main-content">
+  <h1 class="page-title">All Bookings</h1>
+  <p class="page-subtitle">Platform-wide booking management</p>
+  <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+    <button class="btn btn-accent btn-sm" onclick="load(1,'')">All</button>
+    <button class="btn btn-ghost btn-sm" onclick="load(1,'CONFIRMED')">Confirmed</button>
+    <button class="btn btn-ghost btn-sm" onclick="load(1,'PENDING')">Pending</button>
+    <button class="btn btn-ghost btn-sm" onclick="load(1,'CANCELLED')">Cancelled</button>
+  </div>
+  <div class="card" style="padding:0;">
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>Reference</th><th>User</th><th>Operator</th><th>Route</th><th>Departure</th><th>Amount</th><th>Status</th></tr></thead>
+        <tbody id="tbody"><tr><td colspan="7" style="text-align:center;padding:32px;color:#6b7280;">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+  <div id="pagination"></div>
+</main>
+<script src="../js/app.js"></script>
+<script>
+let page=1, status='';
+const bm={CONFIRMED:'badge-green',PENDING:'badge-orange',CANCELLED:'badge-red',COMPLETED:'badge-blue'};
+
+async function load(p=1,s='') {
+  if(!requireAuth())return;
+  page=p; status=s;
+  try {
+    let url=`/bookings/admin/all?page=${p}&limit=20`;
+    if(s) url+=`&status=${s}`;
+    const data=await apiCall(url);
+    const bookings=data.bookings||[];
+    document.getElementById('tbody').innerHTML=bookings.length?bookings.map(b=>`
+      <tr>
+        <td><strong style="color:#1A56DB;font-size:12px;">${b.booking_reference}</strong></td>
+        <td style="font-size:12px;">${b.user_name}<br><span style="color:#6b7280;">${b.user_email}</span></td>
+        <td style="font-size:12px;">${b.operator_name}</td>
+        <td style="font-size:12px;">${b.source_city} → ${b.destination_city}</td>
+        <td style="font-size:11px;">${fmtDateTime(b.departure_time)}</td>
+        <td><strong>${fmtINR(b.final_amount)}</strong></td>
+        <td><span class="badge ${bm[b.status]||'badge-gray'}">${b.status}</span></td>
+      </tr>`).join(''):`<tr><td colspan="7" style="text-align:center;padding:40px;color:#6b7280;">No bookings found</td></tr>`;
+    const total=data.total||0;
+    const pages=Math.ceil(total/20);
+    let ph='<div style="display:flex;gap:6px;justify-content:center;margin-top:16px;">';
+    for(let i=1;i<=Math.min(pages,10);i++) ph+=`<button onclick="load(${i},'${status}')" style="padding:6px 12px;border-radius:6px;border:2px solid ${i===p?'#1A56DB':'#e5e7eb'};background:${i===p?'#1A56DB':'white'};color:${i===p?'white':'#111827'};cursor:pointer;font-weight:600;">${i}</button>`;
+    ph+='</div>';
+    document.getElementById('pagination').innerHTML=pages>1?ph:'';
+  } catch(e){showToast('Failed: '+e.message,'error');}
+}
+load();
+</script>
+</body>
+</html>

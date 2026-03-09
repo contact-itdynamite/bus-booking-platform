@@ -1,0 +1,332 @@
+#version: '3.9'
+
+networks:
+  busnet:
+    driver: bridge
+
+volumes:
+  pgdata:
+
+services:
+
+  # ─────────────────────────────────────────────
+  # PostgreSQL
+  # ─────────────────────────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    container_name: bus_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: busplatform
+      POSTGRES_USER: busadmin
+      POSTGRES_PASSWORD: buspassword123
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - busnet
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U busadmin -d busplatform"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─────────────────────────────────────────────
+  # Redis
+  # ─────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: bus_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - busnet
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─────────────────────────────────────────────
+  # Auth Service
+  # ─────────────────────────────────────────────
+  auth-service:
+    build:
+      context: ../auth-service
+      dockerfile: Dockerfile
+    container_name: bus_auth
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: busplatform
+      DB_USER: busadmin
+      DB_PASSWORD: buspassword123
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: super_secret_jwt_key_bus_platform_2024
+      JWT_EXPIRES_IN: 7d
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-contact.busconnect@gmail.com}
+      SMTP_PASS: ${SMTP_PASS:-bjju oqxa gugo luef}
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - busnet
+
+  # ─────────────────────────────────────────────
+  # User Service
+  # ─────────────────────────────────────────────
+  user-service:
+    build:
+      context: ../user-service
+      dockerfile: Dockerfile
+    container_name: bus_user
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3002
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: busplatform
+      DB_USER: busadmin
+      DB_PASSWORD: buspassword123
+      JWT_SECRET: super_secret_jwt_key_bus_platform_2024
+      WALLET_SERVICE_URL: http://wallet-service:3005
+    ports:
+      - "3002:3002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - busnet
+
+  # ─────────────────────────────────────────────
+  # Operator Service
+  # ─────────────────────────────────────────────
+  operator-service:
+    build:
+      context: ../operator-service
+      dockerfile: Dockerfile
+    container_name: bus_operator
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3003
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: busplatform
+      DB_USER: busadmin
+      DB_PASSWORD: buspassword123
+      JWT_SECRET: super_secret_jwt_key_bus_platform_2024
+    ports:
+      - "3003:3003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - busnet
+
+  # ─────────────────────────────────────────────
+  # Booking Service
+  # ─────────────────────────────────────────────
+  booking-service:
+    build:
+      context: ../booking-service
+      dockerfile: Dockerfile
+    container_name: bus_booking
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3004
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: busplatform
+      DB_USER: busadmin
+      DB_PASSWORD: buspassword123
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: super_secret_jwt_key_bus_platform_2024
+      WALLET_SERVICE_URL: http://wallet-service:3005
+      NOTIFICATION_SERVICE_URL: http://notification-service:3008
+      PROMO_SERVICE_URL: http://promo-service:3006
+    ports:
+      - "3004:3004"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - busnet
+
+  # ─────────────────────────────────────────────
+  # Wallet Service
+  # ─────────────────────────────────────────────
+  wallet-service:
+    build:
+      context: ../wallet-service
+      dockerfile: Dockerfile
+    container_name: bus_wallet
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3005
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: busplatform
+      DB_USER: busadmin
+      DB_PASSWORD: buspassword123
+      JWT_SECRET: super_secret_jwt_key_bus_platform_2024
+      COMMISSION_RATE: 0.10
+    ports:
+      - "3005:3005"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - busnet
+
+  # ─────────────────────────────────────────────
+  # Promo Service
+  # ─────────────────────────────────────────────
+  promo-service:
+    build:
+      context: ../promo-service
+      dockerfile: Dockerfile
+    container_name: bus_promo
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3006
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: busplatform
+      DB_USER: busadmin
+      DB_PASSWORD: buspassword123
+      JWT_SECRET: super_secret_jwt_key_bus_platform_2024
+      WALLET_SERVICE_URL: http://wallet-service:3005
+    ports:
+      - "3006:3006"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - busnet
+
+  # ─────────────────────────────────────────────
+  # Admin Service
+  # ─────────────────────────────────────────────
+  admin-service:
+    build:
+      context: ../admin-service
+      dockerfile: Dockerfile
+    container_name: bus_admin
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3007
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: busplatform
+      DB_USER: busadmin
+      DB_PASSWORD: buspassword123
+      JWT_SECRET: super_secret_jwt_key_bus_platform_2024
+      WALLET_SERVICE_URL: http://wallet-service:3005
+    ports:
+      - "3007:3007"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - busnet
+
+  # ─────────────────────────────────────────────
+  # Notification Service
+  # ─────────────────────────────────────────────
+  notification-service:
+    build:
+      context: ../notification-service
+      dockerfile: Dockerfile
+    container_name: bus_notification
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3008
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: busplatform
+      DB_USER: busadmin
+      DB_PASSWORD: buspassword123
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-contact.busconnect@gmail.com}
+      SMTP_PASS: ${SMTP_PASS:-password}
+    ports:
+      - "3008:3008"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - busnet
+
+  # ─────────────────────────────────────────────
+  # API Gateway
+  # ─────────────────────────────────────────────
+  api-gateway:
+    build:
+      context: ../api-gateway
+      dockerfile: Dockerfile
+    container_name: bus_gateway
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 8080
+      JWT_SECRET: super_secret_jwt_key_bus_platform_2024
+      AUTH_SERVICE_URL: http://auth-service:3001
+      USER_SERVICE_URL: http://user-service:3002
+      OPERATOR_SERVICE_URL: http://operator-service:3003
+      BOOKING_SERVICE_URL: http://booking-service:3004
+      WALLET_SERVICE_URL: http://wallet-service:3005
+      PROMO_SERVICE_URL: http://promo-service:3006
+      ADMIN_SERVICE_URL: http://admin-service:3007
+      NOTIFICATION_SERVICE_URL: http://notification-service:3008
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth-service
+      - user-service
+      - operator-service
+      - booking-service
+      - wallet-service
+      - promo-service
+      - admin-service
+      - notification-service
+    networks:
+      - busnet
+
+  # ─────────────────────────────────────────────
+  # Frontend (nginx static server)
+  # ─────────────────────────────────────────────
+  frontend:
+    image: nginx:alpine
+    container_name: bus_frontend
+    restart: unless-stopped
+    volumes:
+      - ../frontend:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - busnet

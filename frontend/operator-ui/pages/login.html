@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operator Login – BusConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:#f0f4f8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+    .card{background:white;border-radius:20px;padding:48px;width:100%;max-width:460px;box-shadow:0 12px 48px rgba(0,0,0,0.12);}
+    .logo{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#0F172A;text-align:center;margin-bottom:4px;}
+    .logo span{color:#1A56DB;}
+    h1{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;text-align:center;margin-bottom:6px;}
+    p{color:#64748b;text-align:center;margin-bottom:28px;}
+    label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#64748b;margin-bottom:6px;}
+    input{width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:15px;outline:none;transition:border-color 0.2s;margin-bottom:16px;}
+    input:focus{border-color:#1A56DB;}
+    .btn{width:100%;padding:14px;background:#0F172A;color:white;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:background 0.2s;}
+    .btn:hover{background:#1A56DB;}
+    .btn:disabled{opacity:0.5;cursor:not-allowed;}
+    .alert{border-radius:8px;padding:12px 16px;font-size:14px;margin-bottom:16px;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;}
+    .links{text-align:center;margin-top:20px;font-size:14px;color:#64748b;}
+    .links a{color:#1A56DB;font-weight:600;}
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">🚌 Bus<span>Connect</span></div>
+  <h1>Operator Portal</h1>
+  <p>Sign in to manage your fleet</p>
+  <div id="errorAlert" class="alert" style="display:none;"></div>
+  <div>
+    <label>Email Address</label>
+    <input type="email" id="email" placeholder="operator@company.com" autocomplete="email">
+    <label>Password</label>
+    <div style="position:relative;">
+      <input type="password" id="password" placeholder="Your password" onkeypress="if(event.key==='Enter')doLogin()" style="padding-right:44px;">
+      <button type="button" onclick="togglePwd()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;line-height:1;" id="pwdToggle">👁️</button>
+    </div>
+    <button class="btn" id="loginBtn" onclick="doLogin()" style="margin-top:16px;">Sign In to Dashboard</button>
+  </div>
+  <div class="links">
+    <p style="margin-top:16px;">New operator? <a href="register.html">Register here</a></p>
+    <p style="margin-top:8px;"><a href="/index.html">← Back to BusConnect</a></p>
+  </div>
+</div>
+<script src="../js/auth.js"></script>
+<script>
+function togglePwd() {
+  const inp = document.getElementById('password');
+  const btn = document.getElementById('pwdToggle');
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁️'; }
+}
+async function doLogin() {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const err = document.getElementById('errorAlert');
+  const btn = document.getElementById('loginBtn');
+  if (!email || !password) { err.textContent='Please fill all fields'; err.style.display=''; return; }
+  err.style.display='none'; btn.disabled=true; btn.textContent='Signing in...';
+  try {
+    const data = await apiCall('/auth/operator/login', { method:'POST', body:{ email, password } });
+    setAuth(data.token, data.operator);
+    window.location.href = 'dashboard.html';
+  } catch(e) { err.textContent=e.message; err.style.display=''; btn.disabled=false; btn.textContent='Sign In to Dashboard'; }
+}
+</script>
+</body>
+</html>

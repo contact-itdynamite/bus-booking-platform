@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBCYWNrZ3JvdW5kIGNpcmNsZSAtLT4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gQnVzIGJvZHkgLS0+CiAgPHJlY3QgeD0iMTAiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iMjYiIHJ4PSI1IiByeT0iNSIgZmlsbD0id2hpdGUiLz4KICA8IS0tIFdpbmRvd3Mgcm93IC0tPgogIDxyZWN0IHg9IjE0IiB5PSIyMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjMUE1NkRCIi8+CiAgPHJlY3QgeD0iMjciIHk9IjIyIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiMxQTU2REIiLz4KICA8cmVjdCB4PSI0MCIgeT0iMjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzFBNTZEQiIvPgogIDwhLS0gRG9vciAtLT4KICA8cmVjdCB4PSIyNyIgeT0iMzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiNCRkRCRkUiLz4KICA8IS0tIEZyb250L2JhY2sgc3RyaXBzIC0tPgogIDxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQiIHJ4PSIzIiBmaWxsPSIjMTM0MkI4Ii8+CiAgPCEtLSBXaGVlbHMgLS0+CiAgPGNpcmNsZSBjeD0iMjAiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzBGMTcyQSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNDYiIHI9IjIuNSIgZmlsbD0iIzk0QTNCOCIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjUiIGZpbGw9IiMwRjE3MkEiLz4KICA8Y2lyY2xlIGN4PSI0NCIgY3k9IjQ2IiByPSIyLjUiIGZpbGw9IiM5NEEzQjgiLz4KICA8IS0tIEhlYWRsaWdodCAtLT4KICA8cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjRkNEMzREIi8+CiAgPCEtLSBUYWlsIGxpZ2h0IC0tPgogIDxyZWN0IHg9IjUxIiB5PSIyOSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNGQ0E1QTUiLz4KPC9zdmc+Cg=="><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login – BusConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo">🚌 BusConnect</a>
+    <div class="nav-auth">
+      <a href="register.html" class="btn btn-primary">Sign Up</a>
+    </div>
+  </div>
+</nav>
+
+<div class="form-page">
+  <div class="form-card">
+    <div class="form-logo">🚌 BusConnect</div>
+    <h1 class="form-title">Welcome back</h1>
+    <p class="form-sub">Sign in to continue your journey</p>
+
+    <div id="errorAlert" class="alert alert-error" style="display:none"></div>
+
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <div style="position:relative;">
+        <input type="password" id="password" placeholder="Enter password" autocomplete="current-password"
+               onkeypress="if(event.key==='Enter')doLogin()" style="padding-right:44px;">
+        <button type="button" onclick="togglePwd()" id="pwdToggle"
+          style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;line-height:1;">👁️</button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-block btn-lg" onclick="doLogin()" id="loginBtn">Sign In</button>
+
+    <div class="form-divider" style="margin-top:20px">
+      Don't have an account? <a href="register.html" class="form-link">Create one</a>
+    </div>
+    <div class="form-divider">
+      Are you an operator? <a href="../../operator-ui/pages/login.html" class="form-link">Operator Login</a>
+    </div>
+  </div>
+</div>
+
+<script src="../js/auth.js"></script>
+<script>
+function togglePwd() {
+  const inp = document.getElementById('password');
+  const btn = document.getElementById('pwdToggle');
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁️'; }
+}
+async function doLogin() {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const errorAlert = document.getElementById('errorAlert');
+  const btn = document.getElementById('loginBtn');
+
+  if (!email || !password) { errorAlert.textContent = 'Please fill all fields'; errorAlert.style.display=''; return; }
+  errorAlert.style.display = 'none';
+  btn.disabled = true; btn.textContent = 'Signing in...';
+
+  try {
+    const data = await apiCall('/auth/user/login', { method: 'POST', body: { email, password } });
+    setAuth(data.token, data.user);
+    showToast('Login successful! Welcome back.', 'success');
+    setTimeout(() => window.location.href = '../index.html', 800);
+  } catch (err) {
+    errorAlert.textContent = err.message;
+    errorAlert.style.display = '';
+    btn.disabled = false; btn.textContent = 'Sign In';
+  }
+}
+</script>
+</body>
+</html>
